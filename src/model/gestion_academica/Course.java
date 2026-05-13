@@ -9,7 +9,7 @@ public class Course {
     private String name;
     private String code;
     private int credits;
-    private AcademicProgram academicProgramId;
+    private AcademicProgram academicProgram;
     private ArrayList<Course> prerequisites;
 
 
@@ -18,12 +18,12 @@ public class Course {
     public Course() {
     }
 
-    public Course(long courseId, String name, String code, int credits, AcademicProgram academicProgramId, ArrayList<Course> prerequisites) {
+    public Course(long courseId, String name, String code, int credits, AcademicProgram academicProgram, ArrayList<Course> prerequisites) {
         this.courseId = courseId;
         this.name = name;
         this.code = code;
         this.credits = credits;
-        this.academicProgramId = academicProgramId;
+        this.academicProgram = academicProgram;
         this.prerequisites = prerequisites;
     }
 
@@ -61,12 +61,12 @@ public class Course {
         this.credits = credits;
     }
 
-    public AcademicProgram getAcademicProgramId() {
-        return academicProgramId;
+    public AcademicProgram getAcademicProgram() {
+        return academicProgram;
     }
 
-    public void setAcademicProgramId(AcademicProgram academicProgramId) {
-        this.academicProgramId = academicProgramId;
+    public void setAcademicProgram(AcademicProgram academicProgram) {
+        this.academicProgram = academicProgram;
     }
 
     public ArrayList<Course> getPrerequisites() {
