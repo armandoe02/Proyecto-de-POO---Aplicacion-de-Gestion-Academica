@@ -1,5 +1,6 @@
 package repository;
 
+import module.academic_catalog.model.Course;
 import module.enrollment.model.Student;
 
 import java.util.ArrayList;
@@ -20,6 +21,13 @@ public class StudentRepository {
     public Student findById(Long id) {
         return students.stream()
                 .filter(s -> s.getStudentId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Student findByCode(String code) {
+        return students.stream()
+                .filter(c -> c.getStudentCode().equals(code))
                 .findFirst()
                 .orElse(null);
     }

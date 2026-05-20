@@ -1,13 +1,79 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import module.academic_catalog.model.AcademicProgram;
+import repository.AcademicHistoryRepository;
+import repository.CourseRepository;
+import repository.GroupRepository;
+import repository.StudentRepository;
+import seeders.AcademicHistorySeeder;
+import seeders.CourseSeeder;
+import seeders.GroupSeeder;
+import seeders.StudentSeeder;
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
+public class Main {
+
+  public static void main(String[] args) {
+
+    //================ REPOSITORIES ================//
+    CourseRepository courseRepository =
+            new CourseRepository();
+
+    StudentRepository studentRepository =
+            new StudentRepository();
+
+    GroupRepository groupRepository =
+            new GroupRepository();
+
+    AcademicHistoryRepository historyRepository =
+            new AcademicHistoryRepository();
+
+    //================ ACADEMIC PROGRAM ================//
+
+    AcademicProgram systemsEngineering =
+            new AcademicProgram(
+                    1L,
+                    "Ingenieria de Sistemas"
+            );
+
+    //================ SEEDERS ================//
+
+    CourseSeeder.seed(
+            courseRepository,
+            systemsEngineering
+    );
+
+    StudentSeeder.seed(
+            studentRepository,
+            systemsEngineering
+    );
+
+    GroupSeeder.seed(
+            groupRepository,
+            courseRepository
+    );
+
+    AcademicHistorySeeder.seed(
+            historyRepository,
+            studentRepository,
+            courseRepository
+    );
+
+    //================ TESTING ================//
+
+    System.out.println(
+            courseRepository.findByCode("MAT101")
+    );
+
+    System.out.println(
+            studentRepository.findByCode("202311001")
+    );
+
+    System.out.println(
+            groupRepository.findAll()
+    );
+
+    System.out.println(
+            historyRepository.findAll()
+    );
+
+    System.out.println("\nSystem initialized successfully.");
   }
 }

@@ -19,7 +19,14 @@ public class CourseRepository {
 
     public Course findById(Long id) {
         return courses.stream()
-                .filter(s -> s.getCourseId() == id)
+                .filter(c -> c.getCourseId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Course findByCode(String code) {
+        return courses.stream()
+                .filter(c -> c.getCode().equals(code))
                 .findFirst()
                 .orElse(null);
     }
