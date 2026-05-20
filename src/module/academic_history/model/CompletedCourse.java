@@ -1,6 +1,6 @@
-package model.historial_academico;
+package module.academic_history.model;
 
-import model.gestion_academica.Course;
+import module.academic_catalog.model.Course;
 
 public class CompletedCourse {
 

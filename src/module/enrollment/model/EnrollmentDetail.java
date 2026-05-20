@@ -1,6 +1,6 @@
-package model.matricula;
+package module.enrollment.model;
 
-import model.programacion_academica.Group;
+import module.academic_programming.model.Group;
 
 public class EnrollmentDetail {
 

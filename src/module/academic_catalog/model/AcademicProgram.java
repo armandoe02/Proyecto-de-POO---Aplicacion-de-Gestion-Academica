@@ -1,4 +1,4 @@
-package model.gestion_academica;
+package module.academic_catalog.model;
 
 public class AcademicProgram {
 

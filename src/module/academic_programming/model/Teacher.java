@@ -1,4 +1,4 @@
-package model.programacion_academica;
+package module.academic_programming.model;
 
 public class Teacher {
 

@@ -1,4 +1,4 @@
-package model.autenticacion_y_autorizacion;
+package module.authentication.model;
 
 public class Password {
 

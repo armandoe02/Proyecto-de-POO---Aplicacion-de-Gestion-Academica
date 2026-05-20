@@ -1,7 +1,7 @@
-package model.matricula;
+package module.enrollment.model;
 
-import model.autenticacion_y_autorizacion.User;
-import model.gestion_academica.AcademicProgram;
+import module.authentication.model.User;
+import module.academic_catalog.model.AcademicProgram;
 
 public class Student {
 

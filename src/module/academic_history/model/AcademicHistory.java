@@ -1,9 +1,8 @@
-package model.historial_academico;
+package module.academic_history.model;
 
-import model.matricula.Student;
+import module.enrollment.model.Student;
 
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 public class AcademicHistory {
 

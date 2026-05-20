@@ -1,6 +1,6 @@
-package model.matricula;
+package module.enrollment.model;
 
-import model.gestion_academica.AcademicProgram;
+import module.academic_catalog.model.AcademicProgram;
 
 import java.util.ArrayList;
 

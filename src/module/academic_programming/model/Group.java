@@ -1,6 +1,6 @@
-package model.programacion_academica;
+package module.academic_programming.model;
 
-import model.gestion_academica.Course;
+import module.academic_catalog.model.Course;
 
 import java.util.ArrayList;
 
