@@ -3,17 +3,17 @@ package org.unisheduler.backend.domain.model.academic_programming.entity;
 import org.unisheduler.backend.domain.model.academic_catalog.entity.Course;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Group {
 
     //================// Atributos //================//
-    private long groupId;
+    private String groupId;
     private Course course;
     private String groupCode;
     private Teacher teacher;
     private int capacity;
-    private int availableQuotas;
-    private ArrayList<GroupSchedule> schedules;
+    private List<GroupSchedule> schedules;
 
 
     //================// Constructores //================//
@@ -21,23 +21,22 @@ public class Group {
     public Group() {
     }
 
-    public Group(long groupId, Course course, String groupCode, Teacher teacher, int capacity, int availableQuotas, ArrayList<GroupSchedule> schedules) {
+    public Group(String groupId, Course course, String groupCode, Teacher teacher, int capacity, List<GroupSchedule> schedules) {
         this.groupId = groupId;
         this.course = course;
         this.groupCode = groupCode;
         this.teacher = teacher;
         this.capacity = capacity;
-        this.availableQuotas = availableQuotas;
         this.schedules = schedules;
     }
 
     //================// Setters y Getters //================//
 
-    public long getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(long groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
@@ -73,15 +72,7 @@ public class Group {
         this.capacity = capacity;
     }
 
-    public int getAvailableQuotas() {
-        return availableQuotas;
-    }
-
-    public void setAvailableQuotas(int availableQuotas) {
-        this.availableQuotas = availableQuotas;
-    }
-
-    public ArrayList<GroupSchedule> getSchedules() {
+    public List<GroupSchedule> getSchedules() {
         return schedules;
     }
 

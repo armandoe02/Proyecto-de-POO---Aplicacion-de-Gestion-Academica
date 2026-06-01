@@ -1,42 +1,51 @@
 package org.unisheduler.backend.domain.model.enrollment.entity;
 
 import org.unisheduler.backend.domain.model.academic_programming.entity.Group;
+import org.unisheduler.backend.domain.model.enrollment.enums.EnrollmentStatus;
+
+import java.time.LocalDate;
 
 public class EnrollmentDetail {
-
-    //================// Atributos //================//
-    private long enrollmentDetailld;
+    private final String enrollmentDetailId;
     private Group group;
+
+    private EnrollmentStatus status;
+    private Double finalGrade;
 
     //================// Constructores //================//
 
-    public EnrollmentDetail() {
-    }
-
-    public EnrollmentDetail(long enrollmentDetailld, Group group) {
-        this.enrollmentDetailld = enrollmentDetailld;
+    public EnrollmentDetail(String enrollmentDetailId, Group group, EnrollmentStatus status, Double finalGrade) {
+        this.enrollmentDetailId = enrollmentDetailId;
         this.group = group;
+        this.status = status;
+        this.finalGrade = finalGrade;
     }
 
-    //================// Setters y Getters //================//
-
-    public long getEnrollmentDetailld() {
-        return enrollmentDetailld;
-    }
-
-    public void setEnrollmentDetailld(long enrollmentDetailld) {
-        this.enrollmentDetailld = enrollmentDetailld;
+    public String getEnrollmentDetailId() {
+        return enrollmentDetailId;
     }
 
     public Group getGroup() {
         return group;
     }
 
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
+    public Double getFinalGrade() {
+        return finalGrade;
+    }
+
     public void setGroup(Group group) {
         this.group = group;
     }
 
+    public void setStatus(EnrollmentStatus status) {
+        this.status = status;
+    }
 
-    //================// Funciones Adicionales //================//
-
+    public void setFinalGrade(Double finalGrade) {
+        this.finalGrade = finalGrade;
+    }
 }

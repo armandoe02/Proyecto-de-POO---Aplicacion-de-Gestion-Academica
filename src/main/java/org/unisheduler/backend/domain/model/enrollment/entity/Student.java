@@ -1,28 +1,26 @@
 package org.unisheduler.backend.domain.model.enrollment.entity;
 
-import org.unisheduler.backend.module.authentication.model.User;
 import org.unisheduler.backend.domain.model.academic_catalog.entity.AcademicProgram;
+import org.unisheduler.backend.domain.model.auth.entity.User;
 
 public class Student {
 
     //================// Atributos //================//
-    private final long studentId;
+    private final String studentId;
     private final String studentCode;
     private final User user;
-    private AcademicProgram academicProgram;
 
 
     //================// Constructores //================//
-    public Student(long studentId, String studentCode, User user, AcademicProgram academicProgram) {
+    public Student(String studentId, String studentCode, User user) {
         this.studentId = studentId;
         this.studentCode = studentCode;
         this.user = user;
-        this.academicProgram = academicProgram;
     }
 
     //================// Setters y Getters //================//
 
-    public long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
@@ -32,14 +30,6 @@ public class Student {
 
     public User getUser() {
         return user;
-    }
-
-    public AcademicProgram getAcademicProgram() {
-        return academicProgram;
-    }
-
-    public void setAcademicProgram(AcademicProgram academicProgram) {
-        this.academicProgram = academicProgram;
     }
 
 }

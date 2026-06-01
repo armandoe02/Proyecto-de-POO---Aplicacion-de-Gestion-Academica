@@ -1,0 +1,51 @@
+package org.unisheduler.backend.infrastructure.out.repository.academic_programming;
+
+import org.unisheduler.backend.domain.exceptions.shared.EntityNotFoundException;
+import org.unisheduler.backend.domain.model.academic_catalog.entity.Course;
+import org.unisheduler.backend.domain.model.academic_programming.entity.Group;
+import org.unisheduler.backend.domain.model.academic_programming.entity.GroupSchedule;
+import org.unisheduler.backend.domain.model.academic_programming.entity.Teacher;
+import org.unisheduler.backend.domain.port.out.academic_catalog.CourseRepository;
+import org.unisheduler.backend.domain.port.out.academic_programming.GroupRepository;
+import org.unisheduler.backend.domain.port.out.academic_programming.GroupScheduleRepository;
+import org.unisheduler.backend.domain.port.out.academic_programming.TeacherRepository;
+import org.unisheduler.backend.domain.port.out.enrollment.repository.StudentRepository;
+import org.unisheduler.backend.infrastructure.out.entity.academic_programming.GroupEntity;
+import org.unisheduler.backend.infrastructure.out.mapper.academic_programming.GroupMapper;
+import org.unisheduler.backend.infrastructure.out.persistence.excel.repository.academic_program.ExcelGroupRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public class GroupRepositoryImpl implements GroupRepository {
+    private final ExcelGroupRepository groupRepository;
+    private final CourseRepository courseRepository;
+    private final TeacherRepository teacherRepository;
+    private final GroupScheduleRepository groupScheduleRepository;
+
+    public GroupRepositoryImpl(ExcelGroupRepository groupRepository, CourseRepository courseRepository, TeacherRepository teacherRepository, GroupScheduleRepository groupScheduleRepository) {
+        this.groupRepository = groupRepository;
+        this.courseRepository = courseRepository;
+        this.teacherRepository = teacherRepository;
+        this.groupScheduleRepository = groupScheduleRepository;
+    }
+
+    @Override
+    public Optional<Group> findById(String id) {
+        Optional<GroupEntity> entityOptional = groupRepository.findById(id);
+        if(entityOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        GroupEntity entity = entityOptional.get();
+
+        Course course = courseRepository.findById(entity.getCourseId())
+                .orElseThrow(() -> new EntityNotFoundException("No existe el courso con id: " + entity.getCourseId()));
+        Teacher teacher = teacherRepository.findById(entity.getTeacherId())
+                .orElseThrow(() -> new EntityNotFoundException("No existe el profesor con id: " + entity.getTeacherId()));
+        List<GroupSchedule> groupSchedules = groupScheduleRepository.findAllWhereGroupId(entity.getGroupId());
+        Group group = GroupMapper.toDomain(entity, course, teacher, groupSchedules);
+
+        return Optional.of(group);
+    }
+}
