@@ -48,4 +48,9 @@ public class PrerequisiteRepositoryImpl implements PrerequisiteRepository {
 
         return PrerequisiteMapper.toDomain(entity, course.get());
     }
+
+    @Override
+    public boolean deleteWhereCourseId(String id) {
+        return prerequisiteRepository.deleteWhereCourseId(id);
+    }
 }

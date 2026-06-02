@@ -73,4 +73,9 @@ public class CourseRepositoryImpl implements CourseRepository {
         CourseEntity entitySaved = courseRepository.save(entity);
         return CourseMapper.toDomain(entitySaved);
     }
+
+    @Override
+    public boolean deleteById(String id) {
+        return courseRepository.deleteById(id);
+    }
 }

@@ -1,9 +1,7 @@
 package org.unisheduler.backend;
 
-import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseCommand;
-import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseService;
-import org.unisheduler.backend.application.service.academic_catalog.in.UpdateCourseCommand;
-import org.unisheduler.backend.application.service.academic_catalog.in.UpdateCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.in.*;
+import org.unisheduler.backend.application.service.academic_catalog.in.dtos.DeleteCourseResponse;
 import org.unisheduler.backend.application.service.academic_catalog.in.dtos.RegisterCourseResponse;
 import org.unisheduler.backend.application.service.academic_catalog.in.dtos.UpdateCourseResponse;
 import org.unisheduler.backend.application.service.academic_catalog.out.ListAllCoursesServices;
@@ -18,6 +16,7 @@ import org.unisheduler.backend.application.service.enrollment.register.RegisterS
 import org.unisheduler.backend.application.service.enrollment.register.dtos.RegisterStudentResponse;
 import org.unisheduler.backend.domain.model.enrollment.entity.EnrollmentDetail;
 import org.unisheduler.backend.domain.model.enrollment.entity.Student;
+import org.unisheduler.backend.domain.port.in.academic_catalog.DeleteCourseUseCase;
 import org.unisheduler.backend.domain.port.in.academic_catalog.ListAllCoursesUseCase;
 import org.unisheduler.backend.domain.port.in.academic_catalog.RegisterCourseUseCase;
 import org.unisheduler.backend.domain.port.in.academic_catalog.UpdateCourseUseCase;
@@ -222,6 +221,8 @@ public class Main {
             prerequisiteRepository
     );
 
+    DeleteCourseUseCase deleteCourseService = new DeleteCourseService(courseRepository, prerequisiteRepository);
+
     //================// Ejecutar caso de uso (ejemplo) //================//
     //RegisterStudentResponse response = registerStudentService.execute(createStudentCommand());
     //printStudentResponse(response);
@@ -240,32 +241,15 @@ public class Main {
     //RegisterCourseCommand registerCourseCommand = registerCourseCommand();
     //RegisterCourseResponse response = registerCourseService.execute(registerCourseCommand);
 
-    UpdateCourseCommand updatedCourseCommand = updateCourseCommand();
-    UpdateCourseResponse response = updateCourseService.execute(updatedCourseCommand);
+    //UpdateCourseCommand updatedCourseCommand = updateCourseCommand();
+    //UpdateCourseResponse response = updateCourseService.execute(updatedCourseCommand);
 
-    System.out.println("========================================");
-    System.out.println("Resultado: " + response.isSuccessfully());
-    System.out.println("Mensaje: " + response.getMessage());
-    System.out.println("========================================");
+    DeleteCourseCommand deleteCourseCommand = new DeleteCourseCommand("26");
+    DeleteCourseResponse response = deleteCourseService.execute(deleteCourseCommand);
+    System.out.println("Estdo: " + response.isSuccessfully());
+    System.out.println("Message: " + response.getMessage());
 
-    System.out.println("ID: " + response.getCourse().getCourseId());
-    System.out.println("Nombre: " + response.getCourse().getName());
-    System.out.println("Código: " + response.getCourse().getCode());
-    System.out.println("Créditos: " + response.getCourse().getCredits());
 
-    System.out.println("Prerrequisitos:");
-
-    if (response.getCourse().getPrerequisites() == null || response.getCourse().getPrerequisites().isEmpty()) {
-      System.out.println("  Ninguno");
-    } else {
-      for (PrerequisiteInfo prerequisite : response.getCourse().getPrerequisites()) {
-        System.out.println(
-                "  - [" + prerequisite.getCode() + "] "
-                        + prerequisite.getName()
-                        + " (ID: " + prerequisite.getId() + ")"
-        );
-      }
-    }
   }
 
   public static void main(String[] args) {

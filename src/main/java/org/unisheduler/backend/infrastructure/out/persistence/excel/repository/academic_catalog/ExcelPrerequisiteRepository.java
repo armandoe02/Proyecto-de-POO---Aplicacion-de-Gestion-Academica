@@ -87,4 +87,40 @@ public class ExcelPrerequisiteRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteWhereCourseId(String id) {
+
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table table = doc.getTableByName("Prerequisite");
+
+            if (table == null) {
+                throw new RuntimeException("No existe la hoja 'Prerequisite' en el archivo ODS");
+            }
+
+            boolean deleted = false;
+
+            for (int i = table.getRowCount() - 1; i >= 1; i--) {
+
+                String courseId = table.getCellByPosition(1, i).getStringValue();
+                String prerequisiteCourseId = table.getCellByPosition(2, i).getStringValue();
+
+                if (id.equals(courseId) || id.equals(prerequisiteCourseId)) {
+
+                    table.removeRowsByIndex(i, 1);
+                    deleted = true;
+                }
+            }
+
+            if (deleted) {
+                doc.save(FILE_PATH);
+            }
+
+            return deleted;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

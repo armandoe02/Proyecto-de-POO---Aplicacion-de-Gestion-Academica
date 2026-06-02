@@ -184,4 +184,32 @@ public class ExcelCourseRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteById(String id) {
+
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table courseTable = doc.getTableByName("Course");
+
+            for (int i = 1; i < courseTable.getRowCount(); i++) {
+
+                String currentId = courseTable.getCellByPosition(0, i).getStringValue();
+
+                if (id.equals(currentId)) {
+
+                    courseTable.removeRowsByIndex(i, 1);
+
+                    doc.save(FILE_PATH);
+
+                    return true;
+                }
+            }
+
+            return false;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

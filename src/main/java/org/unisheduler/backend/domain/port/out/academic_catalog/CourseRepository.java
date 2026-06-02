@@ -12,4 +12,5 @@ public interface CourseRepository {
     Optional<Course> findByCode(String code);
     Course save(Course course);
     Course update(Course course);
+    boolean deleteById(String id);
 }
