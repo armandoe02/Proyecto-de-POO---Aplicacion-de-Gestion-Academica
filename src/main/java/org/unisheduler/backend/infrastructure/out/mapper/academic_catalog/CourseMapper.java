@@ -17,7 +17,8 @@ public class CourseMapper {
                 entity.getName(),
                 entity.getCode(),
                 entity.getCredits(),
-                new ArrayList<>() // prerequisites no viene desde la entidad
+                entity.getDescription(),
+                new ArrayList<>()
         );
     }
 
@@ -30,8 +31,8 @@ public class CourseMapper {
         entity.setName(course.getName());
         entity.setCode(course.getCode());
         entity.setCredits(course.getCredits());
+        entity.setDescription(course.getDescription());
 
-        // prerequisites NO se guarda en esta entidad (o se maneja en otra tabla)
         return entity;
     }
 

@@ -5,6 +5,7 @@ public class CourseEntity {
     private String name;
     private String code;
     private int credits;
+    private String description;
 
     public String getCourseId() {
         return courseId;
@@ -36,5 +37,13 @@ public class CourseEntity {
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

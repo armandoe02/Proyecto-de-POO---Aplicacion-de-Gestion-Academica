@@ -1,5 +1,8 @@
 package org.unisheduler.backend;
 
+import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseCommand;
+import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.in.dtos.RegisterCourseResponse;
 import org.unisheduler.backend.application.service.academic_catalog.out.ListAllCoursesServices;
 import org.unisheduler.backend.application.service.academic_catalog.out.dtos.CourseInfo;
 import org.unisheduler.backend.application.service.academic_catalog.out.dtos.ListAllCoursesResponse;
@@ -13,6 +16,7 @@ import org.unisheduler.backend.application.service.enrollment.register.dtos.Regi
 import org.unisheduler.backend.domain.model.enrollment.entity.EnrollmentDetail;
 import org.unisheduler.backend.domain.model.enrollment.entity.Student;
 import org.unisheduler.backend.domain.port.in.academic_catalog.ListAllCoursesUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.RegisterCourseUseCase;
 import org.unisheduler.backend.domain.port.in.auth.LoginUserUseCase;
 import org.unisheduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
 import org.unisheduler.backend.domain.port.out.academic_catalog.AcademicProgramRepository;
@@ -47,11 +51,23 @@ import org.unisheduler.backend.infrastructure.out.security.PasswordGeneratorAdap
 import org.unisheduler.backend.infrastructure.out.security.StudentCodeGeneratorAdapter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-  // Metodo para crear un student command para testear el correcto funcionamiento de RegisterStudentService
+  public static RegisterCourseCommand registerCourseCommand() {
+    List<String> prerequisites = new ArrayList<>();
+    prerequisites.add("ALG302");
+    return new RegisterCourseCommand(
+            "GXT32",
+            "MATEMATICAS DISCRETAS",
+            3,
+            "Breve descripcion",
+            prerequisites
+    );
+  }
+
   public static RegisterStudentCommand createStudentCommand() {
     return new RegisterStudentCommand(
             "Ana",
@@ -179,6 +195,11 @@ public class Main {
             prerequisiteRepository
     );
 
+    RegisterCourseUseCase registerCourseService = new RegisterCourseService(
+            courseRepository,
+            prerequisiteRepository
+    );
+
     //================// Ejecutar caso de uso (ejemplo) //================//
     //RegisterStudentResponse response = registerStudentService.execute(createStudentCommand());
     //printStudentResponse(response);
@@ -191,10 +212,35 @@ public class Main {
     //LoginUserResponse successLoginResponse = loginUserService.execute(loginCommand);
     //printLoginResponse(successLoginResponse);
 
-    ListAllCoursesResponse listAllCoursesResponse = listAllCoursesService.execute();
-    printCourses(listAllCoursesResponse);
+    //ListAllCoursesResponse listAllCoursesResponse = listAllCoursesService.execute();
+    //printCourses(listAllCoursesResponse);
 
+    RegisterCourseCommand registerCourseCommand = registerCourseCommand();
+    RegisterCourseResponse response = registerCourseService.execute(registerCourseCommand);
 
+    System.out.println("========================================");
+    System.out.println("Resultado: " + response.isSuccessfully());
+    System.out.println("Mensaje: " + response.getMessage());
+    System.out.println("========================================");
+
+    System.out.println("ID: " + response.getCourse().getCourseId());
+    System.out.println("Nombre: " + response.getCourse().getName());
+    System.out.println("Código: " + response.getCourse().getCode());
+    System.out.println("Créditos: " + response.getCourse().getCredits());
+
+    System.out.println("Prerrequisitos:");
+
+    if (response.getCourse().getPrerequisites() == null || response.getCourse().getPrerequisites().isEmpty()) {
+      System.out.println("  Ninguno");
+    } else {
+      for (PrerequisiteInfo prerequisite : response.getCourse().getPrerequisites()) {
+        System.out.println(
+                "  - [" + prerequisite.getCode() + "] "
+                        + prerequisite.getName()
+                        + " (ID: " + prerequisite.getId() + ")"
+        );
+      }
+    }
   }
 
   public static void main(String[] args) {

@@ -2,7 +2,9 @@ package org.unisheduler.backend.infrastructure.out.persistence.excel.repository.
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
+import org.unisheduler.backend.infrastructure.out.entity.academic_catalog.CourseEntity;
 import org.unisheduler.backend.infrastructure.out.entity.academic_catalog.PrerequisiteEntity;
+import org.unisheduler.backend.infrastructure.out.persistence.excel.core.ExcelIdGenerator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,6 +49,39 @@ public class ExcelPrerequisiteRepository {
             }
 
             return prerequisites;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public PrerequisiteEntity save(String courseId, String coursePrerequisiteId){
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table table = doc.getTableByName("Prerequisite");
+
+            if (table == null) {
+                throw new RuntimeException("No existe la hoja 'Prerequisite' en el archivo ODS");
+            }
+
+            int prerequisiteRow = table.getRowCount();
+            table.appendRow();
+
+            String prerequisiteId = ExcelIdGenerator.generateNextId(table, 0);
+
+            table.getCellByPosition(0, prerequisiteRow).setStringValue(prerequisiteId);
+            table.getCellByPosition(1, prerequisiteRow).setStringValue(courseId);
+            table.getCellByPosition(2, prerequisiteRow).setStringValue(coursePrerequisiteId);
+
+            doc.save(FILE_PATH);
+
+            PrerequisiteEntity entity = new PrerequisiteEntity();
+            entity.setPrerequisiteId(prerequisiteId);
+            entity.setCourseId(courseId);
+            entity.setPrerequisiteCourseId(coursePrerequisiteId);
+
+            return entity;
 
         } catch (Exception e) {
             throw new RuntimeException(e);

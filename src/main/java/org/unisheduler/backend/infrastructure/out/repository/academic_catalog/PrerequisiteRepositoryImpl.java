@@ -8,6 +8,7 @@ import org.unisheduler.backend.infrastructure.out.entity.academic_catalog.Prereq
 import org.unisheduler.backend.infrastructure.out.mapper.academic_catalog.PrerequisiteMapper;
 import org.unisheduler.backend.infrastructure.out.persistence.excel.repository.academic_catalog.ExcelPrerequisiteRepository;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +39,13 @@ public class PrerequisiteRepositoryImpl implements PrerequisiteRepository {
         }
 
         return prerequisites;
+    }
+
+    @Override
+    public Prerequisite save(String courseId, String coursePrerequisiteId) {
+        PrerequisiteEntity entity = prerequisiteRepository.save(courseId, coursePrerequisiteId);
+        Optional<Course> course = courseRepository.findById(entity.getCourseId());
+
+        return PrerequisiteMapper.toDomain(entity, course.get());
     }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PrerequisiteRepository {
     List<Prerequisite> findAllPrerequisitesWhereCourseId(String courseId);
+    Prerequisite save(String courseId, String coursePrerequisiteId);
 }

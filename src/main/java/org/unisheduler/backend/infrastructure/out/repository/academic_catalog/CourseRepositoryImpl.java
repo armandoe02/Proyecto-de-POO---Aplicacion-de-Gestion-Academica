@@ -40,4 +40,29 @@ public class CourseRepositoryImpl implements CourseRepository {
 
         return courses;
     }
+
+    @Override
+    public boolean existsByCode(String code) {
+        return courseRepository.existsByCode(code);
+    }
+
+    @Override
+    public Optional<Course> findByCode(String code) {
+        Optional<CourseEntity> entityOptional = courseRepository.findByCode(code);
+        if(entityOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        CourseEntity entity = entityOptional.get();
+
+        return Optional.of(CourseMapper.toDomain(entity));
+    }
+
+    @Override
+    public Course save(Course course) {
+        CourseEntity entity = CourseMapper.toEntity(course);
+
+        CourseEntity entitySaved = courseRepository.save(entity);
+        return CourseMapper.toDomain(entitySaved);
+    }
 }

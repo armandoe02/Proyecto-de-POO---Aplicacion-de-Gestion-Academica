@@ -10,15 +10,17 @@ public class Course {
     private String name;
     private String code;
     private int credits;
+    private String description;
 
     private List<Course> prerequisites;
 
 
-    public Course(String courseId, String name, String code, int credits, ArrayList<Course> prerequisites) {
+    public Course(String courseId, String name, String code, int credits, String description, ArrayList<Course> prerequisites) {
         this.courseId = courseId;
         this.name = name;
         this.code = code;
         this.credits = credits;
+        this.description = description;
         this.prerequisites = prerequisites != null? prerequisites : new ArrayList<>();
     }
 
@@ -54,6 +56,14 @@ public class Course {
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Course> getPrerequisites() {

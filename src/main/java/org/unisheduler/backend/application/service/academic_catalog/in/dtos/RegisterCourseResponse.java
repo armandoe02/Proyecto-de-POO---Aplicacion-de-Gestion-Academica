@@ -1,0 +1,27 @@
+package org.unisheduler.backend.application.service.academic_catalog.in.dtos;
+
+import org.unisheduler.backend.application.service.academic_catalog.out.dtos.CourseInfo;
+
+public class RegisterCourseResponse {
+    private final boolean successfully;
+    private final String message;
+    private final CourseInfo course;
+
+    public RegisterCourseResponse(boolean successfully, String message, CourseInfo course) {
+        this.successfully = successfully;
+        this.message = message;
+        this.course = course;
+    }
+
+    public boolean isSuccessfully() {
+        return successfully;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public CourseInfo getCourse() {
+        return course;
+    }
+}

@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface CourseRepository {
     Optional<Course> findById(String id);
     List<Course> findAll();
+    boolean existsByCode(String code);
+    Optional<Course> findByCode(String code);
+    Course save(Course course);
 }

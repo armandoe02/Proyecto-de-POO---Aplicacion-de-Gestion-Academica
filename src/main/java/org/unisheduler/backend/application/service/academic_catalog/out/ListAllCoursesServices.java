@@ -52,6 +52,7 @@ public class ListAllCoursesServices implements ListAllCoursesUseCase {
                     course.getName(), 
                     course.getCode(),
                     course.getCredits(),
+                    course.getDescription(),
                     prerequisiteInfos
             );
             
