@@ -151,4 +151,37 @@ public class ExcelCourseRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public CourseEntity update(CourseEntity entity) {
+
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table courseTable = doc.getTableByName("Course");
+
+            for (int i = 1; i < courseTable.getRowCount(); i++) {
+
+                String currentId = courseTable.getCellByPosition(0, i).getStringValue();
+
+                if (entity.getCourseId().equals(currentId)) {
+
+                    courseTable.getCellByPosition(1, i).setStringValue(entity.getName());
+                    courseTable.getCellByPosition(2, i).setStringValue(entity.getCode());
+                    courseTable.getCellByPosition(3, i).setStringValue(String.valueOf(entity.getCredits()));
+                    courseTable.getCellByPosition(4, i).setStringValue(entity.getDescription());
+
+                    doc.save(FILE_PATH);
+
+                    return entity;
+                }
+            }
+
+            throw new RuntimeException(
+                    "No existe una asignatura con id: " + entity.getCourseId()
+            );
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

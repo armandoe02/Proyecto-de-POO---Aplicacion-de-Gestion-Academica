@@ -65,4 +65,12 @@ public class CourseRepositoryImpl implements CourseRepository {
         CourseEntity entitySaved = courseRepository.save(entity);
         return CourseMapper.toDomain(entitySaved);
     }
+
+    @Override
+    public Course update(Course course) {
+        CourseEntity entity = CourseMapper.toEntity(course);
+
+        CourseEntity entitySaved = courseRepository.save(entity);
+        return CourseMapper.toDomain(entitySaved);
+    }
 }

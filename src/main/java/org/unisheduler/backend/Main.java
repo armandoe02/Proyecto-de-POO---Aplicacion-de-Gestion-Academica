@@ -2,7 +2,10 @@ package org.unisheduler.backend;
 
 import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseCommand;
 import org.unisheduler.backend.application.service.academic_catalog.in.RegisterCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.in.UpdateCourseCommand;
+import org.unisheduler.backend.application.service.academic_catalog.in.UpdateCourseService;
 import org.unisheduler.backend.application.service.academic_catalog.in.dtos.RegisterCourseResponse;
+import org.unisheduler.backend.application.service.academic_catalog.in.dtos.UpdateCourseResponse;
 import org.unisheduler.backend.application.service.academic_catalog.out.ListAllCoursesServices;
 import org.unisheduler.backend.application.service.academic_catalog.out.dtos.CourseInfo;
 import org.unisheduler.backend.application.service.academic_catalog.out.dtos.ListAllCoursesResponse;
@@ -17,6 +20,7 @@ import org.unisheduler.backend.domain.model.enrollment.entity.EnrollmentDetail;
 import org.unisheduler.backend.domain.model.enrollment.entity.Student;
 import org.unisheduler.backend.domain.port.in.academic_catalog.ListAllCoursesUseCase;
 import org.unisheduler.backend.domain.port.in.academic_catalog.RegisterCourseUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.UpdateCourseUseCase;
 import org.unisheduler.backend.domain.port.in.auth.LoginUserUseCase;
 import org.unisheduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
 import org.unisheduler.backend.domain.port.out.academic_catalog.AcademicProgramRepository;
@@ -64,6 +68,19 @@ public class Main {
             "MATEMATICAS DISCRETAS",
             3,
             "Breve descripcion",
+            prerequisites
+    );
+  }
+
+  public static UpdateCourseCommand updateCourseCommand() {
+    List<String> prerequisites = new ArrayList<>();
+    prerequisites.add("ALG302");
+    return new UpdateCourseCommand(
+            "25",
+            "GXT32",
+            "MATEMATICAS DISCRETAS",
+            3,
+            "Esta es una mejor descripcion",
             prerequisites
     );
   }
@@ -200,6 +217,11 @@ public class Main {
             prerequisiteRepository
     );
 
+    UpdateCourseUseCase updateCourseService = new UpdateCourseService(
+            courseRepository,
+            prerequisiteRepository
+    );
+
     //================// Ejecutar caso de uso (ejemplo) //================//
     //RegisterStudentResponse response = registerStudentService.execute(createStudentCommand());
     //printStudentResponse(response);
@@ -215,8 +237,11 @@ public class Main {
     //ListAllCoursesResponse listAllCoursesResponse = listAllCoursesService.execute();
     //printCourses(listAllCoursesResponse);
 
-    RegisterCourseCommand registerCourseCommand = registerCourseCommand();
-    RegisterCourseResponse response = registerCourseService.execute(registerCourseCommand);
+    //RegisterCourseCommand registerCourseCommand = registerCourseCommand();
+    //RegisterCourseResponse response = registerCourseService.execute(registerCourseCommand);
+
+    UpdateCourseCommand updatedCourseCommand = updateCourseCommand();
+    UpdateCourseResponse response = updateCourseService.execute(updatedCourseCommand);
 
     System.out.println("========================================");
     System.out.println("Resultado: " + response.isSuccessfully());
