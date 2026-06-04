@@ -1,0 +1,125 @@
+package org.unischeduler.backend.infrastructure.out.persistence.excel.repository.academic_catalog;
+
+import org.odftoolkit.simple.SpreadsheetDocument;
+import org.odftoolkit.simple.table.Table;
+import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.PrerequisiteEntity;
+import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelIdGenerator;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ExcelPrerequisiteRepository {
+    private static final String FILE_PATH = "database/unishedulerdatabase.ods";
+
+    public List<PrerequisiteEntity> findAllPrerequisitesWhereCourseId(String courseId) {
+
+        List<PrerequisiteEntity> prerequisites = new ArrayList<>();
+
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table table = doc.getTableByName("Prerequisite");
+
+            if (table == null) {
+                throw new RuntimeException("No existe la hoja 'Prerequisite' en el archivo ODS");
+            }
+
+            for (int i = 1; i < table.getRowCount(); i++) {
+
+                String currentCourseId = table.getCellByPosition(1, i).getStringValue();
+
+                if (courseId.equals(currentCourseId)) {
+
+                    PrerequisiteEntity entity = new PrerequisiteEntity();
+
+                    entity.setPrerequisiteId(
+                            table.getCellByPosition(0, i).getStringValue()
+                    );
+
+                    entity.setCourseId(currentCourseId);
+
+                    entity.setPrerequisiteCourseId(
+                            table.getCellByPosition(2, i).getStringValue()
+                    );
+
+                    prerequisites.add(entity);
+                }
+            }
+
+            return prerequisites;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public PrerequisiteEntity save(String courseId, String coursePrerequisiteId){
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table table = doc.getTableByName("Prerequisite");
+
+            if (table == null) {
+                throw new RuntimeException("No existe la hoja 'Prerequisite' en el archivo ODS");
+            }
+
+            int prerequisiteRow = table.getRowCount();
+            table.appendRow();
+
+            String prerequisiteId = ExcelIdGenerator.generateNextId(table, 0);
+
+            table.getCellByPosition(0, prerequisiteRow).setStringValue(prerequisiteId);
+            table.getCellByPosition(1, prerequisiteRow).setStringValue(courseId);
+            table.getCellByPosition(2, prerequisiteRow).setStringValue(coursePrerequisiteId);
+
+            doc.save(FILE_PATH);
+
+            PrerequisiteEntity entity = new PrerequisiteEntity();
+            entity.setPrerequisiteId(prerequisiteId);
+            entity.setCourseId(courseId);
+            entity.setPrerequisiteCourseId(coursePrerequisiteId);
+
+            return entity;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteWhereCourseId(String id) {
+
+        try {
+            SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(FILE_PATH));
+
+            Table table = doc.getTableByName("Prerequisite");
+
+            if (table == null) {
+                throw new RuntimeException("No existe la hoja 'Prerequisite' en el archivo ODS");
+            }
+
+            boolean deleted = false;
+
+            for (int i = table.getRowCount() - 1; i >= 1; i--) {
+
+                String courseId = table.getCellByPosition(1, i).getStringValue();
+                String prerequisiteCourseId = table.getCellByPosition(2, i).getStringValue();
+
+                if (id.equals(courseId) || id.equals(prerequisiteCourseId)) {
+
+                    table.removeRowsByIndex(i, 1);
+                    deleted = true;
+                }
+            }
+
+            if (deleted) {
+                doc.save(FILE_PATH);
+            }
+
+            return deleted;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
