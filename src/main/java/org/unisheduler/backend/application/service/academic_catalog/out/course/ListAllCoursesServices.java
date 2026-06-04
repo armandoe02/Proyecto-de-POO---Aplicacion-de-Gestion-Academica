@@ -1,11 +1,11 @@
-package org.unisheduler.backend.application.service.academic_catalog.out;
+package org.unisheduler.backend.application.service.academic_catalog.out.course;
 
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.CourseInfo;
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.ListAllCoursesResponse;
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.PrerequisiteInfo;
+import org.unisheduler.backend.application.service.academic_catalog.out.course.dtos.CourseInfo;
+import org.unisheduler.backend.application.service.academic_catalog.out.course.dtos.ListAllCoursesResponse;
+import org.unisheduler.backend.application.service.academic_catalog.out.course.dtos.PrerequisiteInfo;
 import org.unisheduler.backend.domain.model.academic_catalog.entity.Course;
 import org.unisheduler.backend.domain.model.academic_catalog.entity.Prerequisite;
-import org.unisheduler.backend.domain.port.in.academic_catalog.ListAllCoursesUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.ListAllCoursesUseCase;
 import org.unisheduler.backend.domain.port.out.academic_catalog.CourseRepository;
 import org.unisheduler.backend.domain.port.out.academic_catalog.PrerequisiteRepository;
 

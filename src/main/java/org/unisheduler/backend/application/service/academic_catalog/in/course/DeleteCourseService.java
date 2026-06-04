@@ -1,7 +1,7 @@
-package org.unisheduler.backend.application.service.academic_catalog.in;
+package org.unisheduler.backend.application.service.academic_catalog.in.course;
 
-import org.unisheduler.backend.application.service.academic_catalog.in.dtos.DeleteCourseResponse;
-import org.unisheduler.backend.domain.port.in.academic_catalog.DeleteCourseUseCase;
+import org.unisheduler.backend.application.service.academic_catalog.in.course.dtos.DeleteCourseResponse;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.DeleteCourseUseCase;
 import org.unisheduler.backend.domain.port.out.academic_catalog.CourseRepository;
 import org.unisheduler.backend.domain.port.out.academic_catalog.PrerequisiteRepository;
 

@@ -1,4 +1,4 @@
-package org.unisheduler.backend.application.service.academic_catalog.in;
+package org.unisheduler.backend.application.service.academic_catalog.in.course;
 
 import java.util.List;
 

@@ -1,25 +1,15 @@
 package org.unisheduler.backend;
 
-import org.unisheduler.backend.application.service.academic_catalog.in.*;
-import org.unisheduler.backend.application.service.academic_catalog.in.dtos.DeleteCourseResponse;
-import org.unisheduler.backend.application.service.academic_catalog.in.dtos.RegisterCourseResponse;
-import org.unisheduler.backend.application.service.academic_catalog.in.dtos.UpdateCourseResponse;
-import org.unisheduler.backend.application.service.academic_catalog.out.ListAllCoursesServices;
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.CourseInfo;
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.ListAllCoursesResponse;
-import org.unisheduler.backend.application.service.academic_catalog.out.dtos.PrerequisiteInfo;
-import org.unisheduler.backend.application.service.auth.login.LoginUserCommand;
+import org.unisheduler.backend.application.service.academic_catalog.in.course.DeleteCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.in.course.RegisterCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.in.course.UpdateCourseService;
+import org.unisheduler.backend.application.service.academic_catalog.out.course.ListAllCoursesServices;
 import org.unisheduler.backend.application.service.auth.login.LoginUserService;
-import org.unisheduler.backend.application.service.auth.login.dtos.LoginUserResponse;
-import org.unisheduler.backend.application.service.enrollment.register.RegisterStudentCommand;
 import org.unisheduler.backend.application.service.enrollment.register.RegisterStudentService;
-import org.unisheduler.backend.application.service.enrollment.register.dtos.RegisterStudentResponse;
-import org.unisheduler.backend.domain.model.enrollment.entity.EnrollmentDetail;
-import org.unisheduler.backend.domain.model.enrollment.entity.Student;
-import org.unisheduler.backend.domain.port.in.academic_catalog.DeleteCourseUseCase;
-import org.unisheduler.backend.domain.port.in.academic_catalog.ListAllCoursesUseCase;
-import org.unisheduler.backend.domain.port.in.academic_catalog.RegisterCourseUseCase;
-import org.unisheduler.backend.domain.port.in.academic_catalog.UpdateCourseUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.DeleteCourseUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.ListAllCoursesUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.RegisterCourseUseCase;
+import org.unisheduler.backend.domain.port.in.academic_catalog.course.UpdateCourseUseCase;
 import org.unisheduler.backend.domain.port.in.auth.LoginUserUseCase;
 import org.unisheduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
 import org.unisheduler.backend.domain.port.out.academic_catalog.AcademicProgramRepository;
@@ -52,10 +42,6 @@ import org.unisheduler.backend.infrastructure.out.repository.enrollment.StudentR
 import org.unisheduler.backend.infrastructure.out.security.PasswordEncoderAdapter;
 import org.unisheduler.backend.infrastructure.out.security.PasswordGeneratorAdapter;
 import org.unisheduler.backend.infrastructure.out.security.StudentCodeGeneratorAdapter;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 

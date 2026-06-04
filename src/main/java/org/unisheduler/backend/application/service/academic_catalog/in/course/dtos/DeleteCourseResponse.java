@@ -1,4 +1,4 @@
-package org.unisheduler.backend.application.service.academic_catalog.in.dtos;
+package org.unisheduler.backend.application.service.academic_catalog.in.course.dtos;
 
 public class DeleteCourseResponse {
     private final boolean successfully;

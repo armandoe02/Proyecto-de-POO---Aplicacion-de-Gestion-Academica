@@ -1,4 +1,4 @@
-package org.unisheduler.backend.application.service.academic_catalog.in;
+package org.unisheduler.backend.application.service.academic_catalog.in.course;
 
 public class DeleteCourseCommand {
     private final String id;

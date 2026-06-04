@@ -1,6 +1,4 @@
-package org.unisheduler.backend.application.service.academic_catalog.out.dtos;
-
-import org.unisheduler.backend.domain.model.academic_catalog.entity.Course;
+package org.unisheduler.backend.application.service.academic_catalog.out.course.dtos;
 
 import java.util.List;
 
