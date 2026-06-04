@@ -2,7 +2,7 @@
 target/
 out-tests/
 
-# Pruebas locales y material de trabajo (no se suben al repo)
+# Pruebas locales y material de trabajo de Miguel
 tests/
 parteMiguel/
 
