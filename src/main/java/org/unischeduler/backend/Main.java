@@ -1,5 +1,6 @@
 package org.unischeduler.backend;
 
+import javafx.application.Application;
 import org.unischeduler.backend.application.service.academic_catalog.in.course.DeleteCourseService;
 import org.unischeduler.backend.application.service.academic_catalog.in.course.RegisterCourseService;
 import org.unischeduler.backend.application.service.academic_catalog.in.course.UpdateCourseService;
@@ -8,6 +9,8 @@ import org.unischeduler.backend.application.service.academic_programming.in.Regi
 import org.unischeduler.backend.application.service.academic_programming.in.UpdateGroupService;
 import org.unischeduler.backend.application.service.academic_programming.in.DeleteGroupService;
 import org.unischeduler.backend.application.service.academic_programming.out.ListAllGroupsServices;
+import org.unischeduler.backend.application.service.enrollment.register.RegisterStudentCommand;
+import org.unischeduler.backend.application.service.enrollment.register.dtos.RegisterStudentResponse;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.DeleteCourseUseCase;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.ListAllCoursesUseCase;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.RegisterCourseUseCase;
@@ -51,6 +54,10 @@ import org.unischeduler.backend.infrastructure.out.repository.enrollment.Student
 import org.unischeduler.backend.infrastructure.out.security.PasswordEncoderAdapter;
 import org.unischeduler.backend.infrastructure.out.security.PasswordGeneratorAdapter;
 import org.unischeduler.backend.infrastructure.out.security.StudentCodeGeneratorAdapter;
+import org.unischeduler.ui.app.AppContext;
+import org.unischeduler.ui.app.MainApplication;
+
+import java.time.LocalDate;
 
 public class Main {
 
@@ -103,46 +110,55 @@ public class Main {
             userRepository,
             passwordEncoderPort
     );
+    AppContext.setLoginUserService(loginUserService);
 
     ListAllCoursesUseCase listAllCoursesService = new ListAllCoursesServices(
             courseRepository,
             prerequisiteRepository
     );
+    AppContext.setListAllCoursesService(listAllCoursesService);
 
     RegisterCourseUseCase registerCourseService = new RegisterCourseService(
             courseRepository,
             prerequisiteRepository
     );
+    AppContext.setRegisterCourseService(registerCourseService);
 
     UpdateCourseUseCase updateCourseService = new UpdateCourseService(
             courseRepository,
             prerequisiteRepository
     );
+    AppContext.setUpdateCourseService(updateCourseService);
 
     DeleteCourseUseCase deleteCourseService = new DeleteCourseService(courseRepository, prerequisiteRepository);
+    AppContext.setDeleteCourseService(deleteCourseService);
 
     ListAllGroupsUseCase listAllGroupsService = new ListAllGroupsServices(
             groupRepository
     );
+    AppContext.setListAllGroupsService(listAllGroupsService);
 
     RegisterGroupUseCase registerGroupService = new RegisterGroupService(
             groupRepository,
             courseRepository,
             teacherRepository
     );
+    AppContext.setRegisterGroupService(registerGroupService);
 
     UpdateGroupUseCase updateGroupService = new UpdateGroupService(
             groupRepository,
             courseRepository,
             teacherRepository
     );
+    AppContext.setUpdateGroupService(updateGroupService);
 
     DeleteGroupUseCase deleteGroupService = new DeleteGroupService(groupRepository);
+    AppContext.setDeleteGroupService(deleteGroupService);
 
   }
 
   public static void main(String[] args) {
-
     dependencyInjection();
+    Application.launch(MainApplication.class, args);
   }
 }
