@@ -32,6 +32,8 @@ import org.unischeduler.backend.domain.port.out.enrollment.repository.StudentRep
 import org.unischeduler.backend.domain.port.out.security.PasswordEncoderPort;
 import org.unischeduler.backend.domain.port.out.security.PasswordGeneratorPort;
 import org.unischeduler.backend.domain.port.out.security.StudentCodeGeneratorPort;
+import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataLoader;
+import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataStore;
 import org.unischeduler.backend.infrastructure.out.persistence.excel.repository.academic_catalog.ExcelAcademicProgramRepository;
 import org.unischeduler.backend.infrastructure.out.persistence.excel.repository.academic_catalog.ExcelCourseRepository;
 import org.unischeduler.backend.infrastructure.out.persistence.excel.repository.academic_catalog.ExcelPrerequisiteRepository;
@@ -56,29 +58,36 @@ public class Main {
 
   public static void dependencyInjection() {
     //================// Repositories (Infraestructura) //================//
-    UserRepository userRepository = new UserRepositoryImpl(new ExcelUserRepository());
+    final String FILE_PATH = "database/unishedulerdatabase.ods";
+    ExcelDataStore store = new ExcelDataStore();
+    ExcelDataLoader loader = new ExcelDataLoader();
 
-    StudentRepository studentRepository = new StudentRepositoryImpl(new ExcelStudentRepository(), userRepository);
+    store.load(loader, FILE_PATH);
 
-    AcademicProgramRepository academicProgramRepository = new AcademicProgramRepositoryImpl(new ExcelAcademicProgramRepository());
 
-    CourseRepository courseRepository = new CourseRepositoryImpl(new ExcelCourseRepository());
+    UserRepository userRepository = new UserRepositoryImpl(new ExcelUserRepository(store));
 
-    TeacherRepository teacherRepository = new TeacherRepositoryImpl(new ExcelTeacherRepository());
+    StudentRepository studentRepository = new StudentRepositoryImpl(new ExcelStudentRepository(store), userRepository);
 
-    GroupScheduleRepository groupScheduleRepository = new GroupScheduleRepositoryImpl(new ExcelGroupScheduleRepository());
+    AcademicProgramRepository academicProgramRepository = new AcademicProgramRepositoryImpl(new ExcelAcademicProgramRepository(store));
 
-    GroupRepository groupRepository = new GroupRepositoryImpl(new ExcelGroupRepository(), courseRepository, teacherRepository, groupScheduleRepository);
+    CourseRepository courseRepository = new CourseRepositoryImpl(new ExcelCourseRepository(store));
 
-    EnrollmentDetailRepository enrollmentDetailRepository = new EnrollmentDetailImpl(new ExcelEnrollmentDetailRepository(), groupRepository);
+    TeacherRepository teacherRepository = new TeacherRepositoryImpl(new ExcelTeacherRepository(store));
 
-    EnrollmentRepository enrollmentRepository = new EnrollmentRepositoryImpl(new ExcelEnrollmentRepository(), academicProgramRepository, studentRepository, enrollmentDetailRepository);
+    GroupScheduleRepository groupScheduleRepository = new GroupScheduleRepositoryImpl(new ExcelGroupScheduleRepository(store));
 
-    SemesterTemplateDetailRepository semesterTemplateDetailRepository = new SemesterTemplateDetailRepositoryImpl(new ExcelSemesterTemplateDetailRepository(), groupRepository);
+    GroupRepository groupRepository = new GroupRepositoryImpl(new ExcelGroupRepository(store), courseRepository, teacherRepository, groupScheduleRepository);
 
-    SemesterTemplateRepository semesterTemplateRepository = new SemesterTemplateRepositoryImpl(new ExcelSemesterTemplateRepository(), semesterTemplateDetailRepository);
+    EnrollmentDetailRepository enrollmentDetailRepository = new EnrollmentDetailImpl(new ExcelEnrollmentDetailRepository(store), groupRepository);
 
-    PrerequisiteRepository prerequisiteRepository = new PrerequisiteRepositoryImpl(new ExcelPrerequisiteRepository(), courseRepository);
+    EnrollmentRepository enrollmentRepository = new EnrollmentRepositoryImpl(new ExcelEnrollmentRepository(store), academicProgramRepository, studentRepository, enrollmentDetailRepository);
+
+    SemesterTemplateDetailRepository semesterTemplateDetailRepository = new SemesterTemplateDetailRepositoryImpl(new ExcelSemesterTemplateDetailRepository(store), groupRepository);
+
+    SemesterTemplateRepository semesterTemplateRepository = new SemesterTemplateRepositoryImpl(new ExcelSemesterTemplateRepository(store), semesterTemplateDetailRepository);
+
+    PrerequisiteRepository prerequisiteRepository = new PrerequisiteRepositoryImpl(new ExcelPrerequisiteRepository(store), courseRepository);
 
     //================// Ports (Servicios auxiliares) //================//
     PasswordGeneratorPort passwordGenerator = new PasswordGeneratorAdapter();
