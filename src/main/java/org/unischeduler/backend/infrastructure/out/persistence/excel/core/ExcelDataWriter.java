@@ -34,7 +34,7 @@ public class ExcelDataWriter {
 
             writePrograms(doc, store.getPrograms());
             writeCourses(doc, store.getCourses());
-            writePeriods(doc, store.getPeriods());
+            //writePeriods(doc, store.getPeriods());
             writePrerequisites(doc, store.getPrerequisites());
 
             writeGroups(doc, store.getGroups());
@@ -100,6 +100,7 @@ public class ExcelDataWriter {
         }
     }
 
+    /*
     private void writePeriods(SpreadsheetDocument doc,
                               Map<String, AcademicPeriodEntity> map) {
 
@@ -120,6 +121,8 @@ public class ExcelDataWriter {
             row++;
         }
     }
+
+     */
 
     private void writePrerequisites(SpreadsheetDocument doc,
                                     Map<String, PrerequisiteEntity> map) {
@@ -246,7 +249,7 @@ public class ExcelDataWriter {
     private void writeStudents(SpreadsheetDocument doc,
                                Map<String, StudentEntity> map) {
 
-        Table table = doc.getTableByName("Student");
+        Table table = doc.getTableByName("Students");
 
         int row = 1;
         for (StudentEntity e : map.values()) {

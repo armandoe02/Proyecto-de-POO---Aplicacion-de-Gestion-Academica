@@ -32,7 +32,7 @@ public class ExcelDataLoader {
 
             store.setPrograms(readPrograms(doc));
             store.setCourses(readCourses(doc));
-            store.setPeriods(readPeriods(doc));
+            //store.setPeriods(readPeriods(doc));
             store.setPrerequisites(readPrerequisites(doc));
 
             store.setGroups(readGroups(doc));
@@ -48,6 +48,8 @@ public class ExcelDataLoader {
             store.setUsers(readUsers(doc));
             store.setRoles(readRoles(doc));
             store.setUserRoles(readUserRoles(doc));
+
+            store.setLoaded(true);
 
             return store;
         } catch (Exception e) {
@@ -104,6 +106,7 @@ public class ExcelDataLoader {
         return map;
     }
 
+    /*
     private Map<String, AcademicPeriodEntity> readPeriods(SpreadsheetDocument doc) {
 
         Map<String, AcademicPeriodEntity> map = new HashMap<>();
@@ -125,6 +128,7 @@ public class ExcelDataLoader {
 
         return map;
     }
+    */
 
     private Map<String, PrerequisiteEntity> readPrerequisites(SpreadsheetDocument doc) {
 
@@ -154,7 +158,7 @@ public class ExcelDataLoader {
         Map<String, GroupEntity> map = new HashMap<>();
         Table table = doc.getTableByName("Group");
 
-        for (int i = 1; i < table.getRowCount(); i++) {
+        for (int i = 1; i < table.getRowCount() - 1; i++) {
 
             GroupEntity g = new GroupEntity();
 
@@ -265,7 +269,7 @@ public class ExcelDataLoader {
     private Map<String, StudentEntity> readStudents(SpreadsheetDocument doc) {
 
         Map<String, StudentEntity> map = new HashMap<>();
-        Table table = doc.getTableByName("Student");
+        Table table = doc.getTableByName("Students");
 
         for (int i = 1; i < table.getRowCount(); i++) {
 

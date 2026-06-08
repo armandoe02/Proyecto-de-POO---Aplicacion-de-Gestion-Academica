@@ -10,9 +10,12 @@ import org.unischeduler.backend.domain.port.in.academic_programming.ListAllGroup
 import org.unischeduler.backend.domain.port.in.academic_programming.RegisterGroupUseCase;
 import org.unischeduler.backend.domain.port.in.academic_programming.UpdateGroupUseCase;
 import org.unischeduler.backend.domain.port.in.auth.LoginUserUseCase;
+import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataStore;
 
 public class AppContext {
 
+    public static ExcelDataStore DATA_STORE;
+    public static String FILE_PATH;
     private static LoginUserUseCase loginUserService;
     private static ListAllCoursesUseCase listAllCoursesService;
     private static RegisterCourseUseCase registerCourseService;

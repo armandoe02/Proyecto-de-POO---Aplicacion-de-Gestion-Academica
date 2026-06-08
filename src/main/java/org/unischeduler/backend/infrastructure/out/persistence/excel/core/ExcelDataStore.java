@@ -44,7 +44,7 @@ public class ExcelDataStore {
 
         this.programs = loadedStore.programs;
         this.courses = loadedStore.courses;
-        this.periods = loadedStore.periods;
+        //this.periods = loadedStore.periods;
         this.prerequisites = loadedStore.prerequisites;
 
         this.groups = loadedStore.groups;

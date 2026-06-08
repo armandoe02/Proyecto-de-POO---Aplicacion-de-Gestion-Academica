@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataWriter;
 
 public class MainApplication extends Application {
 
@@ -23,6 +24,12 @@ public class MainApplication extends Application {
         stage.setTitle("UniScheduler");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        ExcelDataWriter writer = new ExcelDataWriter();
+        writer.save(AppContext.FILE_PATH, AppContext.DATA_STORE);
     }
 
     public static void main(String[] args) {

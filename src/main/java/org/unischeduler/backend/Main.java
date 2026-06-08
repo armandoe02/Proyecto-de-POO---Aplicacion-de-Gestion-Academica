@@ -65,11 +65,7 @@ public class Main {
 
   public static void dependencyInjection() {
     //================// Repositories (Infraestructura) //================//
-    final String FILE_PATH = "database/unishedulerdatabase.ods";
-    ExcelDataStore store = new ExcelDataStore();
-    ExcelDataLoader loader = new ExcelDataLoader();
-
-    store.load(loader, FILE_PATH);
+    ExcelDataStore store = AppContext.DATA_STORE;
 
 
     UserRepository userRepository = new UserRepositoryImpl(new ExcelUserRepository(store));
@@ -167,6 +163,11 @@ public class Main {
   }
 
   public static void main(String[] args) {
+    AppContext.FILE_PATH = "database/unishedulerdatabase.ods";
+    ExcelDataLoader loader = new ExcelDataLoader();
+
+    AppContext.DATA_STORE = loader.load(AppContext.FILE_PATH);
+
     dependencyInjection();
     Application.launch(MainApplication.class, args);
   }
