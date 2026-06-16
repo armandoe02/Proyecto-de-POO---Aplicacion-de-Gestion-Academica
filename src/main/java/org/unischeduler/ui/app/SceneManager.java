@@ -32,4 +32,24 @@ public class SceneManager {
             throw new RuntimeException(e);
         }
     }
+
+    public static FXMLLoader loadPageWithLoader(String fxmlPath) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(
+                    SceneManager.class.getResource(fxmlPath)
+            );
+
+            Node page = loader.load();
+
+            contentContainer.getChildren().clear();
+            contentContainer.getChildren().add(page);
+
+            return loader;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

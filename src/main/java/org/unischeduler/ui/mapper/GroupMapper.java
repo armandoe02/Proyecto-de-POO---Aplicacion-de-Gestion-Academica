@@ -8,42 +8,24 @@ import org.unischeduler.ui.viewmodel.group.GroupViewModel;
 
 public class GroupMapper {
 
-    public GroupViewModel toViewModel(
-            GroupInfo groupInfo
-    ) {
+    public static GroupViewModel toViewModel(GroupInfo groupInfo) {
 
         GroupViewModel vm =
                 new GroupViewModel();
 
-        vm.setId(
-                groupInfo.getGroupId()
-        );
+        vm.setId(groupInfo.getGroupId());
 
-        vm.setCourseId(
-                groupInfo.getCourseInfo().getCourseId()
-        );
+        vm.setCourseId(groupInfo.getCourseInfo().getCourseId());
 
-        vm.setCourseName(
-                groupInfo.getCourseInfo().getCourseCode()
-                        + " - "
-                        + groupInfo.getCourseInfo().getCourseName()
-        );
+        vm.setCourseName(groupInfo.getCourseInfo().getCourseName());
 
-        vm.setGroupCode(
-                groupInfo.getGroupCode()
-        );
+        vm.setGroupCode(groupInfo.getGroupCode());
 
-        vm.setTeacherId(
-                groupInfo.getTeacherInfo().getTeacherId()
-        );
+        vm.setTeacherId(groupInfo.getTeacherInfo().getTeacherId());
 
-        vm.setTeacherName(
-                groupInfo.getTeacherInfo().getTeacherName()
-        );
+        vm.setTeacherName(groupInfo.getTeacherInfo().getTeacherName());
 
-        vm.setCapacity(
-                groupInfo.getCapacity()
-        );
+        vm.setCapacity(groupInfo.getCapacity());
 
         if (groupInfo.getSchedules() != null) {
 
@@ -51,7 +33,7 @@ public class GroupMapper {
                     FXCollections.observableArrayList(
                             groupInfo.getSchedules()
                                     .stream()
-                                    .map(this::toScheduleViewModel)
+                                    .map(GroupMapper::toScheduleViewModel)
                                     .toList()
                     )
             );
@@ -60,7 +42,7 @@ public class GroupMapper {
         return vm;
     }
 
-    private GroupScheduleViewModel toScheduleViewModel(
+    private static GroupScheduleViewModel toScheduleViewModel(
             GroupScheduleInfo scheduleInfo
     ) {
 
@@ -72,7 +54,7 @@ public class GroupMapper {
         );
 
         vm.setDay(
-                "Pendiente"
+                scheduleInfo.getDay()
         );
 
         vm.setStartTime(
@@ -91,4 +73,5 @@ public class GroupMapper {
 
         return vm;
     }
+
 }

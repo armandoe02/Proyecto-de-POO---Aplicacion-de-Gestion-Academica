@@ -114,6 +114,6 @@ public class ExcelCourseRepository {
     // 🔢 ID GENERATOR
     // =====================================================
     private String generateId() {
-        return "CRS" + (store.getCourses().size() + 1);
+        return String.valueOf(store.getCourses().size() + 1);
     }
 }

@@ -1,5 +1,7 @@
 package org.unischeduler.ui.viewmodel.group;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,6 +21,8 @@ public class GroupViewModel {
 
     private ObservableList<GroupScheduleViewModel> schedules =
             FXCollections.observableArrayList();
+
+    private final BooleanProperty selected = new SimpleBooleanProperty(false);
 
     public GroupViewModel() {
     }
@@ -85,5 +89,17 @@ public class GroupViewModel {
 
     public void setSchedules(ObservableList<GroupScheduleViewModel> schedules) {
         this.schedules = schedules;
+    }
+
+    public BooleanProperty selectedProperty() {
+        return selected;
+    }
+
+    public boolean isSelected() {
+        return selected.get();
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
     }
 }

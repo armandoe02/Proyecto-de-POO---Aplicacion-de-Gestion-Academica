@@ -114,6 +114,6 @@ public class ExcelUserRepository {
     // 🔢 ID GENERATOR
     // =====================================================
     private String generateId() {
-        return "USR" + (store.getUsers().size() + 1);
+        return String.valueOf(store.getUsers().size() + 1);
     }
 }

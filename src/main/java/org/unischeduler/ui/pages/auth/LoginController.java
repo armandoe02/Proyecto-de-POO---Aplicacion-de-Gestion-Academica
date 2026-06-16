@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.unischeduler.backend.application.service.auth.login.dtos.LoginUserResponse;
+import org.unischeduler.ui.app.AppContext;
 import org.unischeduler.ui.app.AppNavigator;
 import org.unischeduler.ui.service.AuthUiService;
 
@@ -30,11 +31,9 @@ public class LoginController {
                 authUiService.login(username, password);
 
         if (response.isSuccessfully()) {
-
+            AppContext.setCurrentUser(response.getUser());
             AppNavigator.navigateToMainLayout();
-
         } else {
-
             messageLabel.setText(response.getMessage());
         }
     }

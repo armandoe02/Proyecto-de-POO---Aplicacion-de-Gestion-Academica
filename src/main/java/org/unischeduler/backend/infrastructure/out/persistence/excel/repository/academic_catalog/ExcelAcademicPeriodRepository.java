@@ -24,7 +24,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // 🔍 FIND BY ID
+    //  FIND BY ID
     // =====================================================
     public Optional<AcademicPeriodEntity> findById(String id) {
 
@@ -34,7 +34,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // 🔍 FIND ALL
+    //  FIND ALL
     // =====================================================
     public List<AcademicPeriodEntity> findAll() {
 
@@ -44,7 +44,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // 🔍 EXISTS BY CODE
+    //  EXISTS BY CODE
     // =====================================================
     public boolean existsByCode(String code) {
 
@@ -59,7 +59,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // 🔍 FIND BY CODE
+    //  FIND BY CODE
     // =====================================================
     public Optional<AcademicPeriodEntity> findByCode(String code) {
 
@@ -74,7 +74,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // 💾 SAVE
+    //  SAVE
     // =====================================================
     public AcademicPeriodEntity save(AcademicPeriodEntity entity) {
 
@@ -87,7 +87,7 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // ✏️ UPDATE
+    //  UPDATE
     // =====================================================
     public AcademicPeriodEntity update(AcademicPeriodEntity entity) {
 
@@ -103,17 +103,28 @@ public class ExcelAcademicPeriodRepository {
     }
 
     // =====================================================
-    // ❌ DELETE
+    // DELETE
     // =====================================================
     public boolean deleteById(String id) {
 
         return store.getPeriods().remove(id) != null;
     }
 
+    public Optional<AcademicPeriodEntity> findActive() {
+        for (AcademicPeriodEntity p : store.getPeriods().values()) {
+
+            if ("ACTIVE".equals(p.getStatus())) {
+                return Optional.of(p);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     // =====================================================
-    // 🔢 ID GENERATOR
+    //  ID GENERATOR
     // =====================================================
     private String generateId() {
-        return "PER" + (store.getPeriods().size() + 1);
+        return String.valueOf(store.getPeriods().size() + 1);
     }
 }

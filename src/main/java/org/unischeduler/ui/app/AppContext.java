@@ -1,6 +1,12 @@
 package org.unischeduler.ui.app;
 
 
+import org.unischeduler.backend.application.service.auth.login.dtos.UserInfo;
+import org.unischeduler.backend.domain.port.in.academic_catalog.academic_period.DeleteAcademicPeriodUseCase;
+import org.unischeduler.backend.domain.port.in.academic_catalog.academic_period.ListAllAcademicPeriodsUseCase;
+import org.unischeduler.backend.domain.port.in.academic_catalog.academic_period.RegisterAcademicPeriodUseCase;
+import org.unischeduler.backend.domain.port.in.academic_catalog.academic_period.UpdateAcademicPeriodUseCase;
+import org.unischeduler.backend.domain.port.in.academic_catalog.academic_program.ListAllProgramsUseCase;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.DeleteCourseUseCase;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.ListAllCoursesUseCase;
 import org.unischeduler.backend.domain.port.in.academic_catalog.course.RegisterCourseUseCase;
@@ -10,12 +16,19 @@ import org.unischeduler.backend.domain.port.in.academic_programming.ListAllGroup
 import org.unischeduler.backend.domain.port.in.academic_programming.RegisterGroupUseCase;
 import org.unischeduler.backend.domain.port.in.academic_programming.UpdateGroupUseCase;
 import org.unischeduler.backend.domain.port.in.auth.LoginUserUseCase;
+import org.unischeduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
+import org.unischeduler.backend.domain.port.in.enrollment.ValidateCreditLimitUseCase;
+import org.unischeduler.backend.domain.port.in.enrollment.ValidatePrerequisiteUseCase;
+import org.unischeduler.backend.domain.port.in.enrollment.ValidateScheduleConflictsUseCase;
 import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataStore;
 
 public class AppContext {
 
     public static ExcelDataStore DATA_STORE;
     public static String FILE_PATH;
+
+    private static UserInfo currentUser;
+
     private static LoginUserUseCase loginUserService;
     private static ListAllCoursesUseCase listAllCoursesService;
     private static RegisterCourseUseCase registerCourseService;
@@ -25,6 +38,15 @@ public class AppContext {
     private static RegisterGroupUseCase registerGroupService;
     private static UpdateGroupUseCase updateGroupService;
     private static DeleteGroupUseCase deleteGroupService;
+    private static RegisterStudentUseCase registerStudentService;
+    private static ListAllProgramsUseCase listAllProgramsService;
+    private static ListAllAcademicPeriodsUseCase listAllAcademicPeriodsService;
+    private static RegisterAcademicPeriodUseCase registerAcademicPeriodService;
+    private static UpdateAcademicPeriodUseCase updateAcademicPeriodService;
+    private static DeleteAcademicPeriodUseCase deleteAcademicPeriodService;
+    private static ValidateScheduleConflictsUseCase validateScheduleConflictsService;
+    private static ValidatePrerequisiteUseCase validatePrerequisiteService;
+    private static ValidateCreditLimitUseCase validateCreditLimitService;
 
     private AppContext() {}
 
@@ -35,6 +57,20 @@ public class AppContext {
 
     public static void setLoginUserService(LoginUserUseCase service) {
         loginUserService = service;
+    }
+
+    // --------------------------- Session ------------------------------------
+
+    public static UserInfo getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(UserInfo currentUser) {
+        AppContext.currentUser = currentUser;
+    }
+
+    public static void clearSession() {
+        AppContext.currentUser = null;
     }
 
     // --------------------------- Courses ------------------------------------
@@ -102,5 +138,83 @@ public class AppContext {
 
     public static void setDeleteGroupService(DeleteGroupUseCase deleteGroupService) {
         AppContext.deleteGroupService = deleteGroupService;
+    }
+
+    // --------------------------- Student ------------------------------------
+
+    public static RegisterStudentUseCase getRegisterStudentService() {
+        return registerStudentService;
+    }
+
+    public static void setRegisterStudentService(RegisterStudentUseCase registerStudentService) {
+        AppContext.registerStudentService = registerStudentService;
+    }
+
+    // --------------------------- Academic Programs ------------------------------------
+
+    public static ListAllProgramsUseCase getListAllProgramsService() {
+        return listAllProgramsService;
+    }
+
+    public static void setListAllProgramsService(ListAllProgramsUseCase listAllProgramsService) {
+        AppContext.listAllProgramsService = listAllProgramsService;
+    }
+
+    // --------------------------- Academic Periods ------------------------------------
+
+    public static ListAllAcademicPeriodsUseCase getListAllAcademicPeriodsService() {
+        return listAllAcademicPeriodsService;
+    }
+
+    public static void setListAllAcademicPeriodsService(ListAllAcademicPeriodsUseCase listAllAcademicPeriodsService) {
+        AppContext.listAllAcademicPeriodsService = listAllAcademicPeriodsService;
+    }
+
+    public static RegisterAcademicPeriodUseCase getRegisterAcademicPeriodService() {
+        return registerAcademicPeriodService;
+    }
+
+    public static void setRegisterAcademicPeriodService(RegisterAcademicPeriodUseCase registerAcademicPeriodService) {
+        AppContext.registerAcademicPeriodService = registerAcademicPeriodService;
+    }
+
+    public static UpdateAcademicPeriodUseCase getUpdateAcademicPeriodService() {
+        return updateAcademicPeriodService;
+    }
+
+    public static void setUpdateAcademicPeriodService(UpdateAcademicPeriodUseCase updateAcademicPeriodService) {
+        AppContext.updateAcademicPeriodService = updateAcademicPeriodService;
+    }
+
+    public static DeleteAcademicPeriodUseCase getDeleteAcademicPeriodService() {
+        return deleteAcademicPeriodService;
+    }
+
+    public static void setDeleteAcademicPeriodService(DeleteAcademicPeriodUseCase deleteAcademicPeriodService) {
+        AppContext.deleteAcademicPeriodService = deleteAcademicPeriodService;
+    }
+
+    public static ValidateScheduleConflictsUseCase getValidateScheduleConflictsService() {
+        return validateScheduleConflictsService;
+    }
+
+    public static void setValidateScheduleConflictsService(ValidateScheduleConflictsUseCase validateScheduleConflictsService) {
+        AppContext.validateScheduleConflictsService = validateScheduleConflictsService;
+    }
+
+    public static ValidatePrerequisiteUseCase getValidatePrerequisiteService() {
+        return validatePrerequisiteService;
+    }
+
+    public static void setValidatePrerequisiteService(ValidatePrerequisiteUseCase validatePrerequisiteService) {
+        AppContext.validatePrerequisiteService = validatePrerequisiteService;
+    }
+
+    public static ValidateCreditLimitUseCase getValidateCreditLimitService() {
+        return validateCreditLimitService;
+    }
+
+    public static void setValidateCreditLimitService(ValidateCreditLimitUseCase validateCreditLimitService) {
+        AppContext.validateCreditLimitService = validateCreditLimitService;
     }
 }

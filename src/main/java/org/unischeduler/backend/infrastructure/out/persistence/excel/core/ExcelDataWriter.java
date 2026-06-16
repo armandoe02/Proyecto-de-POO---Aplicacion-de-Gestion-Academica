@@ -7,6 +7,7 @@ import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.Acade
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.AcademicProgramEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.CourseEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.PrerequisiteEntity;
+import org.unischeduler.backend.infrastructure.out.entity.academic_history.AcademicHistoryEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_programming.*;
 import org.unischeduler.backend.infrastructure.out.entity.auth.RoleEntity;
 import org.unischeduler.backend.infrastructure.out.entity.auth.UserEntity;
@@ -32,9 +33,30 @@ public class ExcelDataWriter {
         try {
             SpreadsheetDocument doc = SpreadsheetDocument.loadDocument(new File(filePath));
 
+            clearDataRows(doc.getTableByName("AcademicProgram"));
+            clearDataRows(doc.getTableByName("AcademicHistory"));
+            clearDataRows(doc.getTableByName("Course"));
+            clearDataRows(doc.getTableByName("AcademicPeriod"));
+            clearDataRows(doc.getTableByName("Prerequisite"));
+
+            clearDataRows(doc.getTableByName("Group"));
+            clearDataRows(doc.getTableByName("Teachers"));
+            clearDataRows(doc.getTableByName("GroupSchedule"));
+            clearDataRows(doc.getTableByName("SemesterTemplate"));
+            clearDataRows(doc.getTableByName("SemesterTemplateDetails"));
+
+            clearDataRows(doc.getTableByName("Students"));
+            clearDataRows(doc.getTableByName("Enrollments"));
+            clearDataRows(doc.getTableByName("EnrollmentDetails"));
+
+            clearDataRows(doc.getTableByName("Users"));
+            clearDataRows(doc.getTableByName("Roles"));
+            clearDataRows(doc.getTableByName("UserRole"));
+
             writePrograms(doc, store.getPrograms());
+            writeHistories(doc, store.getHistories());
             writeCourses(doc, store.getCourses());
-            //writePeriods(doc, store.getPeriods());
+            writePeriods(doc, store.getPeriods());
             writePrerequisites(doc, store.getPrerequisites());
 
             writeGroups(doc, store.getGroups());
@@ -58,9 +80,38 @@ public class ExcelDataWriter {
         }
     }
 
+    private void clearDataRows(Table table) {
+
+        while (table.getRowCount() > 1) {
+            table.removeRowsByIndex(1, 1);
+        }
+    }
+
     // =====================================================
-    // 📚 CATALOG
+    //  CATALOG
     // =====================================================
+    private void writeHistories(SpreadsheetDocument doc,
+                               Map<String, AcademicHistoryEntity> map) {
+
+        Table table = doc.getTableByName("AcademicHistory");
+
+        int row = 1;
+        for (AcademicHistoryEntity e : map.values()) {
+
+            ensureRow(table, row);
+            for(int i = 0; i < e.getCompletedCoursesId().size(); i++) {
+                table.getCellByPosition(0, row).setStringValue(e.getHistoryId());
+                table.getCellByPosition(1, row).setStringValue(e.getStudentId());
+                table.getCellByPosition(2, row).setStringValue(
+                        e.getCompletedCoursesId().get(i)
+                );
+                table.getCellByPosition(3, row).setDoubleValue(e.getGrade());
+                table.getCellByPosition(4, row).setStringValue(e.getStatus());
+            }
+
+            row++;
+        }
+    }
 
     private void writePrograms(SpreadsheetDocument doc,
                                Map<String, AcademicProgramEntity> map) {
@@ -100,7 +151,6 @@ public class ExcelDataWriter {
         }
     }
 
-    /*
     private void writePeriods(SpreadsheetDocument doc,
                               Map<String, AcademicPeriodEntity> map) {
 
@@ -121,8 +171,6 @@ public class ExcelDataWriter {
             row++;
         }
     }
-
-     */
 
     private void writePrerequisites(SpreadsheetDocument doc,
                                     Map<String, PrerequisiteEntity> map) {
@@ -278,6 +326,7 @@ public class ExcelDataWriter {
             table.getCellByPosition(1, row).setStringValue(e.getStudentId());
             table.getCellByPosition(2, row).setStringValue(e.getAcademicProgramId());
             table.getCellByPosition(3, row).setStringValue(e.getEnrollmentDate().toString());
+            table.getCellByPosition(4, row).setStringValue(e.getAcademicPeriodId());
 
             row++;
         }

@@ -5,6 +5,7 @@ import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelD
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ExcelEnrollmentRepository {
 
@@ -46,6 +47,16 @@ public class ExcelEnrollmentRepository {
     // =====================================================
     public void delete(String id) {
         store.getEnrollments().remove(id);
+    }
+
+    public Optional<EnrollmentEntity> findByStudentAndActivePeriod(String studentId, String periodId) {
+        for(EnrollmentEntity e : store.getEnrollments().values()) {
+            if(studentId.equals(e.getStudentId()) && periodId.equals(e.getAcademicPeriodId())) {
+                return Optional.of(e);
+            }
+        }
+
+        return Optional.empty();
     }
 
     // =====================================================

@@ -6,6 +6,8 @@ import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.Acade
 import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataStore;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import java.util.Optional;
@@ -26,5 +28,9 @@ public class ExcelAcademicProgramRepository {
         return Optional.ofNullable(
                 store.getPrograms().get(id)
         );
+    }
+
+    public List<AcademicProgramEntity> findAll() {
+        return new ArrayList<>(store.getPrograms().values());
     }
 }

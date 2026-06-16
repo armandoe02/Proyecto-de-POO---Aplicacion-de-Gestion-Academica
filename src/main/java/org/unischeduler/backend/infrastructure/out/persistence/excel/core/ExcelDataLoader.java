@@ -2,10 +2,12 @@ package org.unischeduler.backend.infrastructure.out.persistence.excel.core;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
+import org.unischeduler.backend.domain.model.academic_history.entity.AcademicHistory;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.AcademicPeriodEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.AcademicProgramEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.CourseEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.PrerequisiteEntity;
+import org.unischeduler.backend.infrastructure.out.entity.academic_history.AcademicHistoryEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_programming.*;
 import org.unischeduler.backend.infrastructure.out.entity.auth.RoleEntity;
 import org.unischeduler.backend.infrastructure.out.entity.auth.UserEntity;
@@ -19,7 +21,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ExcelDataLoader {
@@ -32,8 +36,10 @@ public class ExcelDataLoader {
 
             store.setPrograms(readPrograms(doc));
             store.setCourses(readCourses(doc));
-            //store.setPeriods(readPeriods(doc));
+            store.setPeriods(readPeriods(doc));
             store.setPrerequisites(readPrerequisites(doc));
+
+            store.setHistories(readHistories(doc));
 
             store.setGroups(readGroups(doc));
             store.setTeachers(readTeachers(doc));
@@ -55,8 +61,40 @@ public class ExcelDataLoader {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         return null;
+    }
+
+    private Map<String, AcademicHistoryEntity> readHistories(SpreadsheetDocument doc) {
+        Map<String, AcademicHistoryEntity> map = new HashMap<>();
+        Table table = doc.getTableByName("AcademicHistory");
+
+        for (int i = 1; i < table.getRowCount(); i++) {
+
+            AcademicHistoryEntity e = new AcademicHistoryEntity();
+
+            e.setHistoryId(table.getCellByPosition(0, i).getStringValue());
+            e.setStudentId(table.getCellByPosition(1, i).getStringValue());
+
+            List<String> completedCourses = new ArrayList<>();
+            for(int j = 1; j < table.getRowCount(); j++) {
+
+                String studentId = table.getCellByPosition(1, j).getStringValue();
+                if(studentId.equals(e.getStudentId())) {
+                    completedCourses.add(
+                        table.getCellByPosition(2, j).getStringValue()
+                    );
+                }
+            }
+
+            e.setCompletedCourses(completedCourses);
+            e.setGrade(Double.parseDouble(table.getCellByPosition(3, i).getStringValue()));
+            e.setStatus(table.getCellByPosition(4, i).getStringValue());
+
+            map.put(e.getHistoryId(), e);
+        }
+
+        return map;
     }
 
     // =====================================================
@@ -106,7 +144,6 @@ public class ExcelDataLoader {
         return map;
     }
 
-    /*
     private Map<String, AcademicPeriodEntity> readPeriods(SpreadsheetDocument doc) {
 
         Map<String, AcademicPeriodEntity> map = new HashMap<>();
@@ -128,7 +165,6 @@ public class ExcelDataLoader {
 
         return map;
     }
-    */
 
     private Map<String, PrerequisiteEntity> readPrerequisites(SpreadsheetDocument doc) {
 
@@ -158,7 +194,7 @@ public class ExcelDataLoader {
         Map<String, GroupEntity> map = new HashMap<>();
         Table table = doc.getTableByName("Group");
 
-        for (int i = 1; i < table.getRowCount() - 1; i++) {
+        for (int i = 1; i < table.getRowCount(); i++) {
 
             GroupEntity g = new GroupEntity();
 
@@ -172,6 +208,8 @@ public class ExcelDataLoader {
 
             map.put(g.getGroupId(), g);
         }
+
+        System.out.println("TOTAL GROUPS LOADED: " + map.size());
 
         return map;
     }
@@ -298,6 +336,7 @@ public class ExcelDataLoader {
             e.setStudentId(table.getCellByPosition(1, i).getStringValue());
             e.setAcademicProgramId(table.getCellByPosition(2, i).getStringValue());
             e.setEnrollmentDate(LocalDate.parse(table.getCellByPosition(3, i).getStringValue()));
+            e.setAcademicPeriodId(table.getCellByPosition(4, i).getStringValue());
 
             map.put(e.getEnrollmentId(), e);
         }

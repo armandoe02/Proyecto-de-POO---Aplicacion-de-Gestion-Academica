@@ -76,6 +76,16 @@ public class ExcelStudentRepository {
         store.getStudents().remove(id);
     }
 
+    public Optional<StudentEntity> findStudentByUserId(String userId) {
+        for (StudentEntity s : store.getStudents().values()) {
+            if (userId.equals(s.getUserId())) {
+                return Optional.of(s);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     // =====================================================
     //  ID GENERATOR
     // =====================================================

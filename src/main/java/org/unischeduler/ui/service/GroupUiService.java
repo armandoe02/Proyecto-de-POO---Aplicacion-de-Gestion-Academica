@@ -26,8 +26,6 @@ public class GroupUiService {
 
     private final ListAllCoursesUseCase listAllCoursesUseCase;
 
-    private final GroupMapper mapper;
-
     public GroupUiService() {
 
         this.listAllGroupsUseCase =
@@ -45,7 +43,6 @@ public class GroupUiService {
         this.listAllCoursesUseCase =
                 AppContext.getListAllCoursesService();
 
-        this.mapper = new GroupMapper();
     }
 
     public List<GroupViewModel> loadGroups() {
@@ -54,7 +51,7 @@ public class GroupUiService {
                 .execute()
                 .getGroups()
                 .stream()
-                .map(mapper::toViewModel)
+                .map(GroupMapper::toViewModel)
                 .toList();
     }
 

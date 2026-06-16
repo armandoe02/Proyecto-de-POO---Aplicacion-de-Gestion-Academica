@@ -4,6 +4,7 @@ import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.Acade
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.AcademicProgramEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.CourseEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_catalog.PrerequisiteEntity;
+import org.unischeduler.backend.infrastructure.out.entity.academic_history.AcademicHistoryEntity;
 import org.unischeduler.backend.infrastructure.out.entity.academic_programming.*;
 import org.unischeduler.backend.infrastructure.out.entity.auth.RoleEntity;
 import org.unischeduler.backend.infrastructure.out.entity.auth.UserEntity;
@@ -20,6 +21,8 @@ public class ExcelDataStore {
     private Map<String, CourseEntity> courses;
     private Map<String, AcademicPeriodEntity> periods;
     private Map<String, PrerequisiteEntity> prerequisites;
+
+    private Map<String, AcademicHistoryEntity> histories;
 
     private Map<String, GroupEntity> groups;
     private Map<String, TeacherEntity> teachers;
@@ -44,8 +47,10 @@ public class ExcelDataStore {
 
         this.programs = loadedStore.programs;
         this.courses = loadedStore.courses;
-        //this.periods = loadedStore.periods;
+        this.periods = loadedStore.periods;
         this.prerequisites = loadedStore.prerequisites;
+
+        this.histories = loadedStore.histories;
 
         this.groups = loadedStore.groups;
         this.teachers = loadedStore.teachers;
@@ -190,5 +195,13 @@ public class ExcelDataStore {
 
     public void setLoaded(boolean loaded) {
         this.loaded = loaded;
+    }
+
+    public Map<String, AcademicHistoryEntity> getHistories() {
+        return histories;
+    }
+
+    public void setHistories(Map<String, AcademicHistoryEntity> histories) {
+        this.histories = histories;
     }
 }
