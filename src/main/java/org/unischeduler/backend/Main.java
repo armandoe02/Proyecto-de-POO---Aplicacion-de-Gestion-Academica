@@ -14,6 +14,9 @@ import org.unischeduler.backend.application.service.academic_programming.in.Regi
 import org.unischeduler.backend.application.service.academic_programming.in.UpdateGroupService;
 import org.unischeduler.backend.application.service.academic_programming.in.DeleteGroupService;
 import org.unischeduler.backend.application.service.academic_programming.out.ListAllGroupsServices;
+import org.unischeduler.backend.application.service.auth.login.RegisterUserCommand;
+import org.unischeduler.backend.application.service.auth.login.RegisterUserService;
+import org.unischeduler.backend.application.service.auth.login.dtos.RegisterUserResponse;
 import org.unischeduler.backend.application.service.enrollment.ValidateCreditLimitService;
 import org.unischeduler.backend.application.service.enrollment.validate.ValidatePrerequisiteService;
 import org.unischeduler.backend.application.service.enrollment.validate.ValidateScheduleConflictsService;
@@ -34,6 +37,7 @@ import org.unischeduler.backend.application.service.auth.login.LoginUserService;
 import org.unischeduler.backend.application.service.enrollment.register.RegisterStudentService;
 
 import org.unischeduler.backend.domain.port.in.auth.LoginUserUseCase;
+import org.unischeduler.backend.domain.port.in.auth.RegisterUserUseCase;
 import org.unischeduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
 import org.unischeduler.backend.domain.port.in.enrollment.ValidateCreditLimitUseCase;
 import org.unischeduler.backend.domain.port.in.enrollment.ValidatePrerequisiteUseCase;
@@ -78,6 +82,8 @@ import org.unischeduler.backend.infrastructure.out.security.PasswordGeneratorAda
 import org.unischeduler.backend.infrastructure.out.security.StudentCodeGeneratorAdapter;
 import org.unischeduler.ui.app.AppContext;
 import org.unischeduler.ui.app.MainApplication;
+
+import java.time.LocalDate;
 
 public class Main {
 
@@ -124,8 +130,12 @@ public class Main {
     StudentCodeGeneratorPort studentCodeGenerator = new StudentCodeGeneratorAdapter();
 
     //================// Use Case (Aplicación) //================//
+
+    RegisterUserUseCase registerUserService = new RegisterUserService(userRepository, passwordEncoderPort);
+
     RegisterStudentUseCase registerStudentService =
             new RegisterStudentService(
+                    registerUserService,
                     userRepository,
                     studentRepository,
                     enrollmentRepository,
@@ -214,7 +224,7 @@ public class Main {
     ValidateCreditLimitUseCase validateCreditLimitService = new ValidateCreditLimitService(enrollmentRepository, courseRepository);
     AppContext.setValidateCreditLimitService(validateCreditLimitService);
 
-
+    
 
   }
 

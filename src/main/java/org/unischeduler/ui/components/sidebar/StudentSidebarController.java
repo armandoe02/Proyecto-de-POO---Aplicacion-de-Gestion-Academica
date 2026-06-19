@@ -4,45 +4,36 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import org.unischeduler.ui.app.SceneManager;
 
-public class SidebarController {
-
+public class StudentSidebarController {
     @FXML
     private void goToDashboard(ActionEvent event) {
 
         SceneManager.loadPage(
-                "/ui/fxml/pages/dashboard/DashboardView.fxml"
+                "/ui/fxml/pages/dashboard/StudentDashboardView.fxml"
         );
     }
 
     @FXML
-    private void goToAcademicPeriods(ActionEvent event) {
+    private void goToAcademicHistory(ActionEvent event) {
 
         SceneManager.loadPage(
-                "/ui/fxml/pages/academic_period/AcademicPeriodView.fxml"
+                "/ui/fxml/pages/academic_history/StudentAcademicHistoryView.fxml"
         );
     }
 
     @FXML
-    private void goToCourses(ActionEvent event) {
+    private void goToProvisionalSchedule(ActionEvent event) {
 
         SceneManager.loadPage(
-                "/ui/fxml/pages/course/CourseView.fxml"
+                "/ui/fxml/pages/provisional_schedule/ProvisionalScheduleView.fxml"
         );
     }
 
     @FXML
-    private void goToGroups(ActionEvent event) {
+    private void goToProfile(ActionEvent event) {
 
         SceneManager.loadPage(
-                "/ui/fxml/pages/group/GroupView.fxml"
-        );
-    }
-
-    @FXML
-    private void goToStudents(ActionEvent event) {
-
-        SceneManager.loadPage(
-                "/ui/fxml/pages/student/StudentView.fxml"
+                "/ui/fxml/pages/profile/StudentProfileView.fxml"
         );
     }
 

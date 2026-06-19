@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.unischeduler.ui.components.sidebar.StudentSidebarController"
+      spacing="10"
+      prefWidth="220">
+
+    <children>
+
+        <Button
+                text="Dashboard"
+                onAction="#goToDashboard"/>
+
+        <Button
+                text="Mi Matricula"
+                onAction="#goToEnrollment"/>
+
+        <Button
+                text="Historial Academico"
+                onAction="#goToAcademicHistory"/>
+
+        <Button
+                text="Horario Provicional"
+                onAction="#goToProvisionalSchedule"/>
+
+        <Button
+                text="Perfil"
+                onAction="#goToProfile"/>
+
+    </children>
+
+</VBox>

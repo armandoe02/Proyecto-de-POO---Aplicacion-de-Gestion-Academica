@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.unischeduler.ui.components.sidebar.SidebarController"
+      fx:controller="org.unischeduler.ui.components.sidebar.AdminSidebarController"
       spacing="10"
       prefWidth="220">
 
@@ -31,8 +31,8 @@
                 onAction="#goToStudents"/>
 
         <Button
-                text="Enrollment"
-                onAction="#goToEnrollment"/>
+                text="Perfil"
+                onAction="#goToProfile"/>
 
     </children>
 

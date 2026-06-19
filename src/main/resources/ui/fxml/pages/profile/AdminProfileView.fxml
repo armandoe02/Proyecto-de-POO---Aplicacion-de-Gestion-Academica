@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.unischeduler.ui.pages.dashboard.DashboardController"
+      fx:controller="org.unischeduler.ui.pages.dashboard.AdminDashboardController"
       spacing="20">
 
     <children>
 
-        <Label text="Dashboard"/>
+        <Label text="Perfil de Administrador"/>
 
         <Label text="Bienvenido a UniScheduler"/>
 

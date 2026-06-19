@@ -1,5 +1,8 @@
 package org.unischeduler.backend.application.service.enrollment.register;
 
+import org.unischeduler.backend.application.service.auth.login.RegisterUserCommand;
+import org.unischeduler.backend.application.service.auth.login.dtos.RegisterUserInfo;
+import org.unischeduler.backend.application.service.auth.login.dtos.RegisterUserResponse;
 import org.unischeduler.backend.application.service.enrollment.register.dtos.RegisterStudentResponse;
 import org.unischeduler.backend.application.service.enrollment.register.dtos.StudentInfo;
 import org.unischeduler.backend.domain.exceptions.academic_catalog.PeriodActiveNotFoundException;
@@ -22,6 +25,7 @@ import org.unischeduler.backend.domain.model.enrollment.entity.Enrollment;
 import org.unischeduler.backend.domain.model.enrollment.entity.EnrollmentDetail;
 import org.unischeduler.backend.domain.model.enrollment.entity.Student;
 import org.unischeduler.backend.domain.model.enrollment.enums.EnrollmentStatus;
+import org.unischeduler.backend.domain.port.in.auth.RegisterUserUseCase;
 import org.unischeduler.backend.domain.port.in.enrollment.RegisterStudentUseCase;
 import org.unischeduler.backend.domain.port.out.academic_catalog.AcademicPeriodRepository;
 import org.unischeduler.backend.domain.port.out.academic_history.AcademicHistoryRepository;
@@ -40,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class RegisterStudentService implements RegisterStudentUseCase {
+    private final RegisterUserUseCase registerUserUseCase;
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final EnrollmentRepository enrollmentRepository;
@@ -52,12 +57,13 @@ public class RegisterStudentService implements RegisterStudentUseCase {
     private final AcademicHistoryRepository academicHistoryRepository;
     private final AcademicPeriodRepository academicPeriodRepository;
 
-    public RegisterStudentService(UserRepository userRepository, StudentRepository studentRepository,
+    public RegisterStudentService(RegisterUserUseCase registerUserUseCase, UserRepository userRepository, StudentRepository studentRepository,
                                   EnrollmentRepository enrollmentRepository, AcademicProgramRepository academicProgramRepository,
                                   PasswordGeneratorPort passwordGenerator, PasswordEncoderPort passwordEncoderPort,
                                   StudentCodeGeneratorPort studentCodeGenerator, SemesterTemplateRepository semesterTemplateRepository,
                                   EnrollmentDetailRepository enrollmentDetailRepository, AcademicHistoryRepository academicHistoryRepository,
                                   AcademicPeriodRepository academicPeriodRepository) {
+        this.registerUserUseCase = registerUserUseCase;
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.enrollmentRepository = enrollmentRepository;
@@ -74,49 +80,50 @@ public class RegisterStudentService implements RegisterStudentUseCase {
     @Override
     public RegisterStudentResponse execute(RegisterStudentCommand command) {
 
-        if(userRepository.existsByDocumentNumber(command.getDocumentNumber())) {
-            throw new DocumentAlreadyExistsException("El numero de documento ya se encuentra registrado");
-        }
-
-        if(userRepository.existsByEmail(command.getEmail())) {
-            throw  new EmailAlreadyExistsException("El correo electronico ingresado ya existe");
-        }
-
-        Optional<AcademicProgram> academicProgramOptional = academicProgramRepository.findById(command.getAcademicProgramId());
-        if(academicProgramOptional.isEmpty()) {
-            throw new EntityNotFoundException("No existe un programa academico con id: " + command.getAcademicProgramId());
-        }
-
-        AcademicProgram academicProgram = academicProgramOptional.get();
-
         // Random Password Generation
         String rawPassword = passwordGenerator.generatePassword();
-        String hashedPassword = passwordEncoderPort.encode(rawPassword);
-        EncodedPassword encodedPassword = new EncodedPassword(hashedPassword);
-
-        Email email = new Email(command.getEmail());
-        DocumentType documentType = DocumentType.valueOf(command.getDocumentType());
-        Gender gender = Gender.valueOf(command.getGender());
-
-        User user = new User(
-                null,
+        RegisterUserCommand registerUserCommand = new RegisterUserCommand(
                 command.getFirstName(),
                 command.getLastName(),
-                documentType,
+                command.getDocumentType(),
                 command.getDocumentNumber(),
                 command.getBirthDate(),
-                gender,
+                command.getGender(),
                 command.getPhoneNumber(),
                 command.getAddress(),
-                email,
-                encodedPassword,
-                Status.valueOf(command.getStatus()),
-                null,
-                null
+                command.getEmail(),
+                rawPassword,
+                "STUDENT",
+                "ACTIVE"
         );
 
-        User userSaved = userRepository.save(user);
+        RegisterUserResponse userResponse = registerUserUseCase.execute(registerUserCommand);
 
+        if(!userResponse.isSuccessfully()) {
+            return new RegisterStudentResponse(
+                    false,
+                    userResponse.getMessage(),
+                    null
+            );
+        }
+
+        Optional<User> userSavedOptional = userRepository.findById(
+                userResponse.getUser().getUserId()
+        );
+
+        if(userSavedOptional.isEmpty()) {
+            return new RegisterStudentResponse(
+                    false,
+                    "No se encontro el usuario",
+                    null
+            );
+        }
+
+        User userSaved = userSavedOptional.get();
+
+
+        AcademicProgram academicProgram = academicProgramRepository.findById(command.getAcademicProgramId())
+                .orElseThrow(() -> new EntityNotFoundException("No se encontro un periodo acadmico con id: " + command.getAcademicProgramId()));
         String studentCode;
         int attempts = 0;
         int maxAttempts = 5;
