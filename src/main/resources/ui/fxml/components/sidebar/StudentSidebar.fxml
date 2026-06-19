@@ -30,6 +30,11 @@
                 text="Perfil"
                 onAction="#goToProfile"/>
 
+        <Button
+                text="Cerrar Sesion"
+                onAction="#goToLogin"/>
+
+
     </children>
 
 </VBox>

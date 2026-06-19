@@ -224,7 +224,7 @@ public class Main {
     ValidateCreditLimitUseCase validateCreditLimitService = new ValidateCreditLimitService(enrollmentRepository, courseRepository);
     AppContext.setValidateCreditLimitService(validateCreditLimitService);
 
-    
+
 
   }
 

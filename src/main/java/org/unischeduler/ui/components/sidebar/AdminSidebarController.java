@@ -2,6 +2,8 @@ package org.unischeduler.ui.components.sidebar;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import org.unischeduler.ui.app.AppContext;
+import org.unischeduler.ui.app.AppNavigator;
 import org.unischeduler.ui.app.SceneManager;
 
 public class AdminSidebarController {
@@ -52,5 +54,11 @@ public class AdminSidebarController {
         SceneManager.loadPage(
                 "/ui/fxml/pages/profile/AdminProfileView.fxml"
         );
+    }
+
+    @FXML
+    private void goToLogin(ActionEvent event) {
+        AppContext.setCurrentUser(null);
+        AppNavigator.navigateToLogin();
     }
 }
