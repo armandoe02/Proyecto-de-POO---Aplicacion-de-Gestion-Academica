@@ -8,16 +8,24 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@/css/global.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.unischeduler.ui.pages.auth.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@/css/global.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.unischeduler.ui.pages.auth.LoginController">
     <children>
-        <VBox alignment="CENTER" prefWidth="350.0" styleClass="login-side-pane" stylesheets="@/css/login.css" HBox.hgrow="ALWAYS">
+        <VBox alignment="CENTER" prefWidth="350.0" spacing="15.0" styleClass="login-side-pane" stylesheets="@/css/login.css" HBox.hgrow="ALWAYS">
             <children>
-                <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Sistema de" textAlignment="CENTER" wrapText="true" />
-                <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Matrícula" textAlignment="CENTER" wrapText="true" />
-                <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Académica" textAlignment="CENTER" wrapText="true" />
-                <Label opacity="0.7" style="-fx-padding: 20 0 0 0;" text="Tu camino académico, conectado." textAlignment="CENTER" wrapText="true" />
+                <Pane styleClass="icon-login, login-logo-large" />
+
+                <VBox alignment="CENTER" spacing="0.0">
+                    <children>
+                        <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Sistema de" textAlignment="CENTER" wrapText="true" />
+                        <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Matrícula" textAlignment="CENTER" wrapText="true" />
+                        <Label style="-fx-font-size: 26px; -fx-font-weight: bold;" text="Académica" textAlignment="CENTER" wrapText="true" />
+                    </children>
+                </VBox>
+
+                <Label opacity="0.7" style="-fx-padding: 10 0 0 0;" text="Tu camino académico, conectado." textAlignment="CENTER" wrapText="true" />
             </children>
         </VBox>
 
