@@ -20,6 +20,7 @@ import org.unischeduler.backend.domain.port.in.academic_catalog.prerequisite.Reg
 import org.unischeduler.backend.domain.port.in.academic_history.GetAcademicHistoryUseCase;
 import org.unischeduler.backend.domain.port.in.academic_programming.*;
 import org.unischeduler.backend.domain.port.in.academic_programming.schedule.GetScheduleUseCase;
+import org.unischeduler.backend.domain.port.in.auth.ChangePasswordUseCase;
 import org.unischeduler.backend.domain.port.in.auth.LoginUserUseCase;
 import org.unischeduler.backend.domain.port.in.enrollment.*;
 import org.unischeduler.backend.infrastructure.out.persistence.excel.core.ExcelDataStore;
@@ -54,6 +55,7 @@ public class AppContext {
     private static RegisterEnrollmentUseCase registerEnrollmentService;
     private static RegisterPrerequisiteUseCase registerPrerequisiteService;
     private static ListAllTeachersUseCase listAllTeachersService;
+    private static ChangePasswordUseCase changePasswordService;
 
     private AppContext() {}
 
@@ -263,5 +265,13 @@ public class AppContext {
 
     public static void setListAllTeachersService(ListAllTeachersUseCase listAllTeachersService) {
         AppContext.listAllTeachersService = listAllTeachersService;
+    }
+
+    public static ChangePasswordUseCase getChangePasswordService() {
+        return changePasswordService;
+    }
+
+    public static void setChangePasswordService(ChangePasswordUseCase changePasswordService) {
+        AppContext.changePasswordService = changePasswordService;
     }
 }

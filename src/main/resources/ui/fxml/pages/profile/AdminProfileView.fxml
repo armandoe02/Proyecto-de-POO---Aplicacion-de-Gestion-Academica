@@ -17,7 +17,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<ScrollPane fitToWidth="true"
+<ScrollPane fx:controller="org.unischeduler.ui.pages.profile.AdminProfileController"
+            fitToWidth="true"
             hbarPolicy="NEVER"
             style="-fx-background-color: -fx-bg-dark-primary; -fx-background: -fx-bg-dark-primary; -fx-border-color: transparent;"
             xmlns="http://javafx.com/javafx/21"
@@ -61,39 +62,39 @@
                             <VBox spacing="6">
                                 <children>
                                     <Label text="Nombre completo" style="-fx-text-fill: -fx-text-muted;" />
-                                    <TextField fx:id="txtNombre" text="María González" />
+                                    <TextField fx:id="txtNombre" text="María González" editable="false" />
                                 </children>
                             </VBox>
 
                             <VBox spacing="6">
                                 <children>
                                     <Label text="Correo electrónico" style="-fx-text-fill: -fx-text-muted;" />
-                                    <TextField fx:id="txtCorreo" text="maria.gonzalez@universidad.edu" />
+                                    <TextField fx:id="txtCorreo" text="maria.gonzalez@universidad.edu" editable="false" />
                                 </children>
                             </VBox>
 
                             <VBox spacing="6">
                                 <children>
                                     <Label text="Número de teléfono" style="-fx-text-fill: -fx-text-muted;" />
-                                    <TextField fx:id="txtTelefono" text="+51 987 654 321" />
+                                    <TextField fx:id="txtTelefono" text="+51 987 654 321" editable="false" />
                                 </children>
                             </VBox>
 
                             <VBox spacing="6">
                                 <children>
                                     <Label text="Programa académico" style="-fx-text-fill: -fx-text-muted;" />
-                                    <TextField fx:id="txtPrograma" text="Ingeniería de Sistemas" />
+                                    <TextField fx:id="txtPrograma" text="Ingeniería de Sistemas" editable="false" />
                                 </children>
                             </VBox>
 
                             <VBox spacing="6">
                                 <children>
                                     <Label text="Año de estudio" style="-fx-text-fill: -fx-text-muted;" />
-                                    <TextField fx:id="txtAnio" text="3er año" />
+                                    <TextField fx:id="txtAnio" text="3er año" editable="false" />
                                 </children>
                             </VBox>
 
-                            <Button fx:id="btnGuardar" text="Guardar cambios" styleClass="button" style="-fx-background-color: -fx-accent-green; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" maxWidth="1.7976931348623157E308"/>
+                            <Button fx:id="btnGuardar" disable="true" text="Guardar cambios" styleClass="button" style="-fx-background-color: -fx-accent-green; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" maxWidth="1.7976931348623157E308"/>
                         </children>
                     </VBox>
 

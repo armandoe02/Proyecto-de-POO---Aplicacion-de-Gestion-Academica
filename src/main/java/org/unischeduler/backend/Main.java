@@ -261,17 +261,7 @@ public class Main {
     AppContext.setListAllTeachersService(listAllTeachersService);
 
     ChangePasswordUseCase changePasswordService = new ChangePasswordService(userRepository, passwordEncoderPort);
-
-    ChangePasswordCommand command = new ChangePasswordCommand(
-            "6",
-            "CURhX*FE",
-            "Camilo123*",
-            "Camilo123*"
-    );
-
-    ChangePasswordResponse response = changePasswordService.execute(command);
-    System.out.println("Success: " + response.isSuccessfully());
-    System.out.println("Message: " + response.getMessage());
+    AppContext.setChangePasswordService(changePasswordService);
 
   }
 
