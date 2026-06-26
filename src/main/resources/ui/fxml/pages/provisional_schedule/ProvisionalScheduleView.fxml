@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.unischeduler.ui.pages.schedule.ScheduleController">
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="true">
+
+            <GridPane fx:id="scheduleGrid"
+                      hgap="1"
+                      vgap="1"/>
+
+        </ScrollPane>
+    </center>
+
+</BorderPane>

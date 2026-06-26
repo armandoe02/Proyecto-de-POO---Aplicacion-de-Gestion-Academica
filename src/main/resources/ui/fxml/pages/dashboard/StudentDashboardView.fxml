@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="25.0"
+      style="-fx-background-color: -fx-bg-dark-primary; -fx-padding: 30;"
+      stylesheets="@/css/dasboard.css"
+      VBox.vgrow="ALWAYS"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+
+        <VBox spacing="5.0">
+            <children>
+                <Label fx:id="lblWelcomeMessage" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: -fx-accent-green;" text="¡Bienvenido, Juan Pérez!" />
+                <Label style="-fx-text-fill: -fx-text-muted; -fx-font-size: 14px;" text="Aquí tienes un resumen de tu estado académico actual." />
+            </children>
+        </VBox>
+
+        <HBox spacing="20.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="info-card" HBox.hgrow="ALWAYS" style="-fx-background-color: -fx-bg-dark-secondary; -fx-border-color: -fx-bg-dark-tertiary; -fx-padding: 15; -fx-background-radius: 6; -fx-border-radius: 6;">
+                    <children>
+                        <VBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label style="-fx-text-fill: -fx-text-muted; -fx-font-size: 12px;" text="Programa Académico" />
+                                <Label fx:id="lblCareerName" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;" text="Ingeniería de Sistemas" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="info-card" HBox.hgrow="ALWAYS" style="-fx-background-color: -fx-bg-dark-secondary; -fx-border-color: -fx-bg-dark-tertiary; -fx-padding: 15; -fx-background-radius: 6; -fx-border-radius: 6;">
+                    <children>
+                        <VBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label style="-fx-text-fill: -fx-text-muted; -fx-font-size: 12px;" text="Periodo Activo" />
+                                <Label fx:id="lblAcademicPeriod" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;" text="2026-1" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+
+        <VBox spacing="12.0">
+            <children>
+                <Label style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 16px;" text="Accesos Rápidos" />
+
+                <GridPane hgap="15.0" vgap="15.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="btnQuickEnroll" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" styleClass="quick-access-btn" style="-fx-cursor: hand; -fx-font-weight: bold; -fx-background-color: -fx-bg-dark-secondary; -fx-text-fill: white; -fx-border-color: -fx-bg-dark-tertiary; -fx-background-radius: 6; -fx-border-radius: 6;" text="Ingresar al Espacio Académico" GridPane.columnIndex="0" />
+                        <Button fx:id="btnQuickHistory" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" styleClass="quick-access-btn" style="-fx-cursor: hand; -fx-font-weight: bold; -fx-background-color: -fx-bg-dark-secondary; -fx-text-fill: white; -fx-border-color: -fx-bg-dark-tertiary; -fx-background-radius: 6; -fx-border-radius: 6;" text="Consultar Historial Académico" GridPane.columnIndex="1" />
+                        <Button fx:id="btnQuickSchedule" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" styleClass="quick-access-btn" style="-fx-cursor: hand; -fx-font-weight: bold; -fx-background-color: -fx-bg-dark-secondary; -fx-text-fill: white; -fx-border-color: -fx-bg-dark-tertiary; -fx-background-radius: 6; -fx-border-radius: 6;" text="Ver Horario Provisional" GridPane.columnIndex="2" />
+                        <Button fx:id="btnQuickNotifications" maxWidth="Infinity" maxHeight="Infinity" mnemonicParsing="false" styleClass="quick-access-btn" style="-fx-cursor: hand; -fx-font-weight: bold; -fx-background-color: -fx-bg-dark-secondary; -fx-text-fill: white; -fx-border-color: -fx-bg-dark-tertiary; -fx-background-radius: 6; -fx-border-radius: 6;" text="Notificaciones" GridPane.columnIndex="3" />
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+
+        <VBox spacing="10.0" styleClass="info-card" VBox.vgrow="ALWAYS" style="-fx-background-color: -fx-bg-dark-secondary; -fx-border-color: -fx-bg-dark-tertiary; -fx-padding: 20; -fx-background-radius: 6; -fx-border-radius: 6;">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 15px;" text="Avisos de la Institución" />
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Hyperlink fx:id="lnkViewAllNotices" style="-fx-text-fill: -fx-accent-green; -fx-underline: true;" text="Ver todos los anuncios" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <VBox spacing="8.0" style="-fx-padding: 5 0 0 0;">
+                    <children>
+                        <Label fx:id="lblNoticeContent" styleClass="notice-item" style="-fx-text-fill: #E2E8F0; -fx-font-size: 13px;" text="• Las evaluaciones correspondientes al primer corte del ciclo académico 2026-1 se encontrarán disponibles para consulta en los canales oficiales." wrapText="true" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+    </children>
+</VBox>
