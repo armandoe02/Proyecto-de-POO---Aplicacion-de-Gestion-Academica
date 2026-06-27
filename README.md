@@ -196,6 +196,26 @@ Accede a todas las funciones de gestión del sistema: períodos académicos, cur
 Accede a la consulta de su horario, inscripción de materias con validaciones automáticas, y consulta de su historial académico.
 
 ---
+---
+🔑 Cuentas de Prueba
+
+Para facilitar la evaluación del sistema, se incluyen cuentas preconfiguradas:
+---
+```bash
+# Administrador
+Email: admin@gmail.com
+Password: Admin123*
+```
+```bash
+# Estudiante
+Email: camilo@gmail.com
+Password: Camilo123*
+```
+```bash
+# Estudiante
+Email: pepita@gmail.com
+Password: Pepita123*
+```
 
 ## Motor de Validaciones
 
